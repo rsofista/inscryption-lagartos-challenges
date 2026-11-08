@@ -24,6 +24,17 @@ namespace LagartosChallenges
             int room = toPlayer ? balance + (Goal - 1) : (Goal - 1) - balance;
             return Math.Min(damage, Math.Max(0, room));
         }
+
+        /// <summary>
+        /// Caps a combat phase's total damage (<c>CombatPhaseManager.DamageDealtThisPhase</c>) before the game turns
+        /// overkill into teeth, so a capped hit leaves no excess.
+        /// </summary>
+        /// <param name="balance">Current balance.</param>
+        /// <param name="dealt">Damage dealt this combat phase.</param>
+        /// <param name="playerIsAttacker">True during the player's combat.</param>
+        /// <returns>Damage to keep.</returns>
+        public static int CombatDamage(int balance, int dealt, bool playerIsAttacker) =>
+            CapDamage(balance, dealt, toPlayer: !playerIsAttacker);
     }
 
     /// <summary>

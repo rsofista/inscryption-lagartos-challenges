@@ -242,18 +242,18 @@ namespace LagartosChallenges
 namespace LagartosChallenges
 {
     /// <summary>
-    /// Holds the offer scope open while each step of the boulder event runs (its card comes from
-    /// <c>GetDistinctCardsFromPool</c>). Patches the coroutine's <c>MoveNext</c>, not the
-    /// <c>BoulderChoiceSequence()</c> stub: a stub taking only <c>this</c> is small enough for Mono to inline,
-    /// and patches on inlined methods never run.
+    /// Holds the offer scope open while each step of the boulder reward runs (its card comes from
+    /// <c>GetDistinctCardsFromPool</c> inside <c>RewardSequence</c>, a nested coroutine Unity steps on its own).
+    /// Patches the coroutine's <c>MoveNext</c>, not its stub: small stubs can be inlined by Mono, and patches on
+    /// inlined methods never run.
     /// </summary>
     [HarmonyPatch]
     internal static class BoulderOfferScopePatch
     {
-        /// <summary>The boulder coroutine's state machine step.</summary>
+        /// <summary>The boulder reward coroutine's state machine step.</summary>
         /// <returns>Its <c>MoveNext</c> method.</returns>
         private static MethodBase TargetMethod() =>
-            AccessTools.EnumeratorMoveNext(AccessTools.Method(typeof(BoulderChoiceSequencer), nameof(BoulderChoiceSequencer.BoulderChoiceSequence)));
+            AccessTools.EnumeratorMoveNext(AccessTools.Method(typeof(BoulderChoiceSequencer), "RewardSequence"));
 
         /// <summary>Opens the scope before the step.</summary>
         private static void Prefix() => OfferScope.Enter();

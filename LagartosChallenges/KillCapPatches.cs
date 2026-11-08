@@ -27,11 +27,7 @@ namespace LagartosChallenges
         [HarmonyPatch(typeof(LifeManager), nameof(LifeManager.ShowDamageSequence))]
         private static void CapDamage(LifeManager __instance, ref int damage, ref int numWeights, bool toPlayer)
         {
-            bool firstOn = Challenges.IsActive(ChallengeKey.NoFirstTurnKill);
-            bool phaseOn = Challenges.IsActive(ChallengeKey.NoPhaseTurnKill);
-            if (!firstOn && !phaseOn) return;
-            TurnManager turns = Singleton<TurnManager>.Instance;
-            if (turns == null || !Tracker.IsCapRound(turns.TurnNumber, firstOn, phaseOn)) return;
+            if (!InCapRound(out TurnManager turns)) return;
 
             int capped = KillCapRules.CapDamage(__instance.Balance, damage, toPlayer);
             if (capped == damage) return;
@@ -39,13 +35,58 @@ namespace LagartosChallenges
                                $"{(toPlayer ? "player" : "opponent")} would take {damage}, capped to {capped}.");
             damage = capped;
             if (numWeights > capped) numWeights = capped;
-            Challenges.ShowActivation(Tracker.InPhaseRound ? ChallengeKey.NoPhaseTurnKill : ChallengeKey.NoFirstTurnKill);
+            ShowCapActivation();
         }
+
+        /// <summary>Whether the current round is capped (also false outside Kaycee's Mod or without the challenges).</summary>
+        /// <param name="turns">The turn manager, when it exists.</param>
+        /// <returns>True when damage this round is capped.</returns>
+        internal static bool InCapRound(out TurnManager turns)
+        {
+            turns = Singleton<TurnManager>.Instance;
+            bool firstOn = Challenges.IsActive(ChallengeKey.NoFirstTurnKill);
+            bool phaseOn = Challenges.IsActive(ChallengeKey.NoPhaseTurnKill);
+            return (firstOn || phaseOn) && turns != null && Tracker.IsCapRound(turns.TurnNumber, firstOn, phaseOn);
+        }
+
+        /// <summary>Flashes the icon of the challenge that capped this round.</summary>
+        internal static void ShowCapActivation() =>
+            Challenges.ShowActivation(Tracker.InPhaseRound ? ChallengeKey.NoPhaseTurnKill : ChallengeKey.NoFirstTurnKill);
 
         /// <summary>A battle's scales are set up: back to phase 1 (virtual method, never inlined).</summary>
         [HarmonyPrefix]
         [HarmonyPatch(typeof(LifeManager), nameof(LifeManager.Initialize))]
         private static void BattleStarted() => Tracker.BattleStarted();
+    }
+
+    /// <summary>
+    /// Caps combat damage before <c>CombatPhaseManager.DoCombatPhase</c> turns overkill into teeth: it computes the
+    /// excess from <c>DamageDealtThisPhase</c> right after <c>VisualizeDamageMovingToScales</c>, so the total is
+    /// clamped on that coroutine's first step (it also shows the capped weights). Patches the state machine's
+    /// <c>MoveNext</c>: the one-argument coroutine stub is small enough for Mono to inline.
+    /// </summary>
+    [HarmonyPatch]
+    internal static class CombatDamageCapPatch
+    {
+        /// <summary>The damage-to-scales coroutine's state machine step.</summary>
+        /// <returns>Its <c>MoveNext</c> method.</returns>
+        private static MethodBase TargetMethod() =>
+            AccessTools.EnumeratorMoveNext(AccessTools.Method(typeof(CombatPhaseManager), "VisualizeDamageMovingToScales"));
+
+        /// <summary>Clamps <c>DamageDealtThisPhase</c> in a capped round (idempotent, so every step may run it).</summary>
+        private static void Prefix()
+        {
+            if (!KillCapPatches.InCapRound(out TurnManager turns)) return;
+            CombatPhaseManager combat = turns.CombatPhaseManager;
+            LifeManager life = Singleton<LifeManager>.Instance;
+            if (combat == null || life == null) return;
+            int dealt = combat.DamageDealtThisPhase;
+            int capped = KillCapRules.CombatDamage(life.Balance, dealt, playerIsAttacker: turns.IsPlayerTurn);
+            if (capped == dealt) return;
+            Plugin.Log.LogInfo($"Kill cap: combat damage {dealt} capped to {capped} (no overkill teeth).");
+            Traverse.Create(combat).Property(nameof(CombatPhaseManager.DamageDealtThisPhase)).SetValue(capped);
+            KillCapPatches.ShowCapActivation();
+        }
     }
 
     /// <summary>

@@ -73,4 +73,18 @@ public class KillCapRulesTests
         tracker.BattleStarted();
         Assert.False(tracker.IsCapRound(5, firstTurnKillOn: true, phaseTurnKillOn: true));
     }
+
+    [Theory]
+    [InlineData(0, 7, true)]
+    [InlineData(-1, 9, true)]
+    [InlineData(3, 4, true)]
+    [InlineData(0, 6, false)]
+    public void Capped_combat_damage_leaves_no_excess_teeth(int balance, int dealt, bool playerIsAttacker)
+    {
+        int capped = KillCapRules.CombatDamage(balance, dealt, playerIsAttacker);
+        // CombatPhaseManager pays teeth for Balance + DamageDealtThisPhase - 5 when the player attacks.
+        int excess = playerIsAttacker ? balance + capped - KillCapRules.Goal : -balance + capped - KillCapRules.Goal;
+        Assert.True(excess < 0, $"excess {excess}");
+        Assert.True(capped > 0);
+    }
 }
