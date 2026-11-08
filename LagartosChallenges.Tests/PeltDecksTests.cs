@@ -3,7 +3,7 @@ using LagartosChallenges;
 namespace LagartosChallenges.Tests;
 
 /// <summary>
-/// Tests for the six pelt starter decks.
+/// Tests for the eight pelt starter decks.
 /// </summary>
 public class PeltDecksTests
 {
@@ -22,9 +22,9 @@ public class PeltDecksTests
     }
 
     [Fact]
-    public void There_are_six_decks()
+    public void There_are_eight_decks()
     {
-        Assert.Equal(6, PeltDecks.All.Count);
+        Assert.Equal(8, PeltDecks.All.Count);
     }
 
     [Fact]
@@ -48,6 +48,8 @@ public class PeltDecksTests
         Assert.Equal((1, 2, 0), Count(PeltDecks.All[3]));
         Assert.Equal((1, 1, 1), Count(PeltDecks.All[4]));
         Assert.Equal((0, 2, 1), Count(PeltDecks.All[5]));
+        Assert.Equal((0, 1, 2), Count(PeltDecks.All[6]));
+        Assert.Equal((0, 0, 3), Count(PeltDecks.All[7]));
     }
 
     [Fact]
@@ -62,8 +64,15 @@ public class PeltDecksTests
     [Fact]
     public void Every_deck_has_a_distinct_title_and_icon()
     {
-        Assert.Equal(6, PeltDecks.All.Select(d => d.Title).Distinct().Count());
-        Assert.Equal(6, PeltDecks.All.Select(d => d.IconFile).Distinct().Count());
+        Assert.Equal(8, PeltDecks.All.Select(d => d.Title).Distinct().Count());
+        Assert.Equal(8, PeltDecks.All.Select(d => d.IconFile).Distinct().Count());
         Assert.All(PeltDecks.All, d => Assert.EndsWith(".png", d.IconFile));
+    }
+
+    [Fact]
+    public void Every_deck_icon_ships_in_assets()
+    {
+        string assets = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "LagartosChallenges", "Assets"));
+        Assert.All(PeltDecks.All, d => Assert.True(File.Exists(Path.Combine(assets, d.IconFile)), $"Missing {d.IconFile}"));
     }
 }

@@ -293,6 +293,8 @@ def main():
     deck_icon("deck_wolf_rabbit.png", [RABBIT] + [WOLF] * 2)
     assortment = deck_icon("deck_assortment.png", [RABBIT, WOLF, GOLDEN])
     deck_icon("deck_wolf_golden.png", [WOLF] * 2 + [GOLDEN])
+    deck_icon("deck_golden_wolf.png", [WOLF] + [GOLDEN] * 2)
+    deck_icon("deck_golden.png", [GOLDEN] * 3)
     rabbit_portrait()
     wolf_portrait()
     golden_portrait()

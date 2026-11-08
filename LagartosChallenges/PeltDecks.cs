@@ -31,7 +31,7 @@ namespace LagartosChallenges
     }
 
     /// <summary>
-    /// The six pelt starter decks. Like the vanilla decks they hold 3 cards; Kaycee's Mod adds its 2 bonus cards
+    /// The eight pelt starter decks. Like the vanilla decks they hold 3 cards; Kaycee's Mod adds its 2 bonus cards
     /// (Rabbit Pelts, or an Opossum/Ring Worm after giving up runs) on top.
     /// Kept free of Unity/game types so it can be unit tested.
     /// </summary>
@@ -61,6 +61,10 @@ namespace LagartosChallenges
                 RabbitPelt, WolfPelt, GoldenPelt),
             new PeltDeck("Wolf and Golden Pelts", "deck_wolf_golden.png",
                 WolfPelt, WolfPelt, GoldenPelt),
+            new PeltDeck("Golden and Wolf Pelts", "deck_golden_wolf.png",
+                WolfPelt, GoldenPelt, GoldenPelt),
+            new PeltDeck("Golden Pelts", "deck_golden.png",
+                GoldenPelt, GoldenPelt, GoldenPelt),
         };
 
         /// <summary>

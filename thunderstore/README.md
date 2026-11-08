@@ -1,6 +1,6 @@
 # Lagarto's Challenges
 
-Inscryption mod for **Kaycee's Mod** with 28 challenges and 6 pelt starter decks. It is a compilation: it replaces
+Inscryption mod for **Kaycee's Mod** with 28 challenges and 8 pelt starter decks. It is a compilation: it replaces
 the **Unfair Hand** and **Pelt Starter Hands** mods (uninstall them; BepInEx refuses to load them next to this one).
 
 Selected challenges show their icon with a yellow frame.
@@ -42,7 +42,7 @@ Selected challenges show their icon with a yellow frame.
 ## Starter decks
 
 Rabbit Pelts, Rabbit and Wolf Pelts, Rabbit and Golden Pelts, Wolf and Rabbit Pelts, Pelt Assortment, Wolf and Golden
-Pelts (3 pelts each, with Act II style pixel portraits).
+Pelts, Golden and Wolf Pelts (1 Wolf, 2 Golden), Golden Pelts (3 Golden) (3 pelts each, with Act II style pixel portraits).
 
 ## Requirements
 
