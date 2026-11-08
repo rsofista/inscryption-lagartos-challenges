@@ -1,0 +1,10 @@
+{
+  "name": "Lagartos_Challenges",
+  "version_number": "1.0.0",
+  "website_url": "",
+  "description": "27 Kaycee's Mod challenges (tribe/cost-only offers, no first turn kill, no-event, one squirrel, totem kinship...) plus 6 pelt starter decks. Replaces Unfair Hand and Pelt Starter Hands.",
+  "dependencies": [
+    "BepInEx-BepInExPack_Inscryption-5.4.2305",
+    "API_dev-API-2.24.1"
+  ]
+}
