@@ -1,7 +1,10 @@
 # Lagarto's Challenges
 
-Inscryption mod for **Kaycee's Mod** with 28 challenges and 8 pelt starter decks. It is a compilation: it replaces
-the **Unfair Hand** and **Pelt Starter Hands** mods (uninstall them; BepInEx refuses to load them next to this one).
+Inscryption mod for **Kaycee's Mod** with 28 challenges and 8 pelt starter decks.
+
+> **Unfair Hand and Pelt Starter Hands are now part of this mod.** Everything they did (Unfair Hand, Worthy Squirrel,
+> Annoying Trades and the pelt starter decks) is included here, and those mods will no longer be updated.
+> Uninstall them before installing Lagarto's Challenges: BepInEx refuses to load them next to this one.
 
 Selected challenges show their icon with a yellow frame.
 
