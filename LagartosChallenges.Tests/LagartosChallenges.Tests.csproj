@@ -27,6 +27,7 @@
     <Compile Include="../LagartosChallenges/AnnoyingRules.cs" Link="AnnoyingRules.cs" />
     <Compile Include="../LagartosChallenges/PeltDecks.cs" Link="PeltDecks.cs" />
     <Compile Include="../LagartosChallenges/Translations.cs" Link="Translations.cs" />
+    <Compile Include="../LagartosChallenges/ChallengeCatalog.cs" Link="ChallengeCatalog.cs" />
   </ItemGroup>
 
 </Project>

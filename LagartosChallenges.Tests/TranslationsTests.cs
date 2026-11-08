@@ -11,17 +11,19 @@ public class TranslationsTests
     private static readonly string[] GameLanguages = { "fr", "it", "de", "es", "pt", "tr", "ru", "ja", "ko", "zhcn", "zhtw" };
 
     /// <summary>Every English text the mod shows in game.</summary>
-    public static TheoryData<string> AllTexts => new()
+    public static TheoryData<string> AllTexts
     {
-        Translations.UnfairHandTitle,
-        Translations.UnfairHandDescription,
-        Translations.WorthySquirrelTitle,
-        Translations.WorthySquirrelDescription,
-        Translations.DoubleBloodName,
-        Translations.DoubleBloodDescription,
-        Translations.AnnoyingTradesTitle,
-        Translations.AnnoyingTradesDescription,
-    };
+        get
+        {
+            var texts = new TheoryData<string> { Translations.DoubleBloodName, Translations.DoubleBloodDescription };
+            foreach (ChallengeDef def in ChallengeCatalog.All)
+            {
+                texts.Add(def.Title);
+                texts.Add(def.Description);
+            }
+            return texts;
+        }
+    }
 
     [Theory]
     [MemberData(nameof(AllTexts))]

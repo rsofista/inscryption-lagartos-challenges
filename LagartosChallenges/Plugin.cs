@@ -11,7 +11,7 @@ using InscryptionAPI.Localizing;
 namespace LagartosChallenges
 {
     /// <summary>
-    /// BepInEx entry point. Registers every challenge, the pelt starter decks and the Double Blood sigil,
+    /// BepInEx entry point. Registers every challenge in <see cref="ChallengeCatalog"/>, the pelt starter decks and the Double Blood sigil,
     /// then applies the Harmony patches. Replaces the Unfair Hand and Pelt Starter Hands mods, so it refuses to
     /// load next to them.
     /// </summary>
@@ -33,14 +33,14 @@ namespace LagartosChallenges
         /// <summary>Plugin logger, shared with the patches.</summary>
         internal static ManualLogSource Log;
 
-        /// <summary>Id the API assigned to the Unfair Hand challenge.</summary>
-        internal static AscensionChallenge UnfairHandChallenge;
+        /// <summary>Id of the Unfair Hand challenge (used by the absorbed patches).</summary>
+        internal static AscensionChallenge UnfairHandChallenge => Challenges.Id(ChallengeKey.UnfairHand);
 
-        /// <summary>Id the API assigned to the Worthy Squirrel challenge.</summary>
-        internal static AscensionChallenge WorthySquirrelChallenge;
+        /// <summary>Id of the Worthy Squirrel challenge (used by the absorbed patches).</summary>
+        internal static AscensionChallenge WorthySquirrelChallenge => Challenges.Id(ChallengeKey.WorthySquirrel);
 
-        /// <summary>Id the API assigned to the Annoying Trades challenge.</summary>
-        internal static AscensionChallenge AnnoyingTradesChallenge;
+        /// <summary>Id of the Annoying Trades challenge (used by the absorbed patches).</summary>
+        internal static AscensionChallenge AnnoyingTradesChallenge => Challenges.Id(ChallengeKey.AnnoyingTrades);
 
         /// <summary>
         /// Unity entry point: registers decks, challenges and the sigil, then patches the game.
@@ -60,9 +60,7 @@ namespace LagartosChallenges
                     deck.CardNames.ToArray());
             }
 
-            UnfairHandChallenge = AddChallenge(Translations.UnfairHandTitle, Translations.UnfairHandDescription, 5, "unfair_hand_icon");
-            WorthySquirrelChallenge = AddChallenge(Translations.WorthySquirrelTitle, Translations.WorthySquirrelDescription, -5, "worthy_squirrel_icon");
-            AnnoyingTradesChallenge = AddChallenge(Translations.AnnoyingTradesTitle, Translations.AnnoyingTradesDescription, 5, "annoying_trades_icon");
+            Challenges.RegisterAll(PluginGuid);
 
             // Rulebook entry so the sigil can be inspected; no other meta categories, so it never shows up
             // in totems, the sigil altar or random cards.
@@ -77,24 +75,6 @@ namespace LagartosChallenges
             new Harmony(PluginGuid).PatchAll(typeof(Plugin).Assembly);
             Log.LogInfo($"{PluginName} loaded.");
         }
-
-        /// <summary>
-        /// Registers one Kaycee's Mod challenge with InscryptionAPI.
-        /// </summary>
-        /// <param name="title">English title (also part of the challenge id).</param>
-        /// <param name="description">English description.</param>
-        /// <param name="points">Points the challenge adds (negative for assists).</param>
-        /// <param name="iconBase">Embedded icon name without extension; the active icon adds "_activated".</param>
-        /// <returns>The id the API assigned.</returns>
-        private static AscensionChallenge AddChallenge(string title, string description, int points, string iconBase) =>
-            ChallengeManager.Add(
-                PluginGuid,
-                title,
-                description,
-                points,
-                TextureHelper.GetImageAsTexture(iconBase + ".png", typeof(Plugin).Assembly),
-                TextureHelper.GetImageAsTexture(iconBase + "_activated.png", typeof(Plugin).Assembly)
-            ).Challenge.challengeType;
 
         /// <summary>
         /// Registers every <see cref="Translations"/> entry with InscryptionAPI, so the game's
@@ -117,13 +97,13 @@ namespace LagartosChallenges
         }
 
         /// <summary>True when the current run is a Kaycee's Mod run with Unfair Hand selected.</summary>
-        internal static bool UnfairHandActive => ChallengeActive(UnfairHandChallenge);
+        internal static bool UnfairHandActive => Challenges.IsActive(ChallengeKey.UnfairHand);
 
         /// <summary>True when the current run is a Kaycee's Mod run with Worthy Squirrel selected.</summary>
-        internal static bool WorthySquirrelActive => ChallengeActive(WorthySquirrelChallenge);
+        internal static bool WorthySquirrelActive => Challenges.IsActive(ChallengeKey.WorthySquirrel);
 
         /// <summary>True when the current run is a Kaycee's Mod run with Annoying Trades selected.</summary>
-        internal static bool AnnoyingTradesActive => ChallengeActive(AnnoyingTradesChallenge);
+        internal static bool AnnoyingTradesActive => Challenges.IsActive(ChallengeKey.AnnoyingTrades);
 
         /// <summary>True when the current run is a Kaycee's Mod run with vanilla Annoying Starters selected.</summary>
         internal static bool AnnoyingStartersActive => ChallengeActive(AscensionChallenge.WeakStarterDeck);
