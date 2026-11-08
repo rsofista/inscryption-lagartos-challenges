@@ -1,20 +1,25 @@
-"""Generates the mod's pixel-art icons into PeltStarterHands/Assets (stdlib only, no PIL).
+"""Generates the mod's pixel-art icons into LagartosChallenges/Assets (stdlib only, no PIL).
+
+The 24 new challenge icons live in challenge_icons.py; every active variant is the base icon plus a yellow frame
+(frame_active). Unfair Hand / Worthy Squirrel base icons are hand-made PNGs that are only read here.
 
 Run: python tools/make_icons.py
 
 - deck_*.png (35x44): starter deck icons, one small pelt per card (2 on top, 1 below).
-- thunderstore/icon.png (256x256): the assortment deck icon and the challenge icon side by side, upscaled.
+- thunderstore/icon.png (256x256): nine challenge icons in a 3x3 grid, upscaled.
 - pixel_*.png (41x28): Act II style pixel portraits for the three pelts, which the base game lacks. The Kaycee's
   Mod starter deck screen draws cards in that style. Black silhouette with 50% black shading, like the game's own.
-- challenge_icon*.png (49x49): Annoying Trades challenge, a pelt turning into an Annoying card.
+- annoying_trades_icon*.png (49x49): Annoying Trades challenge, a pelt turning into an Annoying card.
   Same frame and palette as the Unfair Hand icons (2px transparent margin, dark/red background).
 """
 import os
 import struct
 import zlib
 
+import challenge_icons
+
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-ASSETS = os.path.join(ROOT, "PeltStarterHands", "Assets")
+ASSETS = os.path.join(ROOT, "LagartosChallenges", "Assets")
 THUNDERSTORE = os.path.join(ROOT, "thunderstore")
 
 CLEAR = (0, 0, 0, 0)
@@ -114,6 +119,63 @@ def challenge_icon(name, background):
     rect(img, 37, 30, 39, 32, RED)
     write_png(os.path.join(ASSETS, name), img)
     return img
+
+
+YELLOW = (240, 200, 40, 255)
+
+
+def frame_active(img):
+    """Active variant: copy of a 49x49 icon with a 2px yellow square frame just inside the 2px margin."""
+    out = [list(row) for row in img]
+    for i in range(2, 47):
+        for t in (2, 3):
+            out[t][i] = out[46 - (t - 2)][i] = YELLOW
+            out[i][t] = out[i][46 - (t - 2)] = YELLOW
+    return out
+
+
+def read_png(path):
+    """Reads an 8-bit RGBA or RGB, non-interlaced PNG into rows of (r, g, b, a) tuples."""
+    data = open(path, "rb").read()
+    pos, idat, w, h, ctype = 8, b"", 0, 0, 6
+    while pos < len(data):
+        length = struct.unpack(">I", data[pos:pos + 4])[0]
+        kind, body = data[pos + 4:pos + 8], data[pos + 8:pos + 8 + length]
+        if kind == b"IHDR":
+            w, h, depth, ctype = struct.unpack(">IIBB", body[:10])
+            assert depth == 8 and ctype in (2, 6), "only 8-bit RGB/RGBA PNGs"
+        elif kind == b"IDAT":
+            idat += body
+        pos += 12 + length
+    bpp = 4 if ctype == 6 else 3
+    raw, stride, rows, prev = zlib.decompress(idat), w * bpp, [], bytearray(w * bpp)
+    for y in range(h):
+        f, line = raw[y * (stride + 1)], bytearray(raw[y * (stride + 1) + 1:(y + 1) * (stride + 1)])
+        for i in range(stride):
+            a = line[i - bpp] if i >= bpp else 0
+            b, c = prev[i], (prev[i - bpp] if i >= bpp else 0)
+            if f == 1: line[i] = (line[i] + a) & 255
+            elif f == 2: line[i] = (line[i] + b) & 255
+            elif f == 3: line[i] = (line[i] + (a + b) // 2) & 255
+            elif f == 4:
+                pa, pb, pc = abs(b - c), abs(a - c), abs(a + b - 2 * c)
+                line[i] = (line[i] + (a if pa <= pb and pa <= pc else b if pb <= pc else c)) & 255
+        rows.append([tuple(line[x * bpp:x * bpp + bpp]) + (() if bpp == 4 else (255,)) for x in range(w)])
+        prev = line
+    return rows
+
+
+def store_grid(icons):
+    """256x256 Thunderstore icon: 9 challenge icons in a 3x3 grid, upscaled, on the dark background."""
+    img = canvas(256, 256, BG)
+    for n, src in enumerate(icons[:9]):
+        x0, y0 = 14 + (n % 3) * 80, 14 + (n // 3) * 80
+        for y in range(49 * 3 // 2):
+            for x in range(49 * 3 // 2):
+                p = src[y * 2 // 3][x * 2 // 3]
+                if p[3]:
+                    img[y0 + y][x0 + x] = p
+    write_png(os.path.join(THUNDERSTORE, "icon.png"), img)
 
 
 def store_icon(deck, challenge):
@@ -230,10 +292,14 @@ def main():
     rabbit_portrait()
     wolf_portrait()
     golden_portrait()
-    challenge = challenge_icon("challenge_icon.png", BG)
-    challenge_icon("challenge_icon_activated.png", BG_ACTIVE)
+    annoying = challenge_icon("annoying_trades_icon.png", BG)
+    write_png(os.path.join(ASSETS, "annoying_trades_icon_activated.png"), frame_active(annoying))
+    for name in ("unfair_hand", "worthy_squirrel"):
+        base = read_png(os.path.join(ASSETS, name + "_icon.png"))
+        write_png(os.path.join(ASSETS, name + "_icon_activated.png"), frame_active(base))
+    icons = challenge_icons.make_all(write_png, ASSETS, frame_active)
     os.makedirs(THUNDERSTORE, exist_ok=True)
-    store_icon(assortment, challenge)
+    store_grid([icons[k] for k in challenge_icons.STORE_ICONS])
 
 
 if __name__ == "__main__":
