@@ -14,6 +14,14 @@ public class HandRulesTests
     }
 
     [Fact]
+    public void Two_squirrels_opening_hand_draws_two() =>
+        Assert.Equal(2, HandRules.OpeningSquirrels(twoSquirrels: true));
+
+    [Fact]
+    public void Normal_opening_hand_draws_one_squirrel() =>
+        Assert.Equal(1, HandRules.OpeningSquirrels(twoSquirrels: false));
+
+    [Fact]
     public void Opening_hand_draws_three_deck_cards()
     {
         Assert.Equal(3, HandRules.DeckCardCount);

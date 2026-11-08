@@ -49,7 +49,7 @@ namespace LagartosChallenges
     }
 
     /// <summary>
-    /// One Squirrel: the Act 1 side deck holds only 2 cards (one for the opening hand, one to draw).
+    /// One Squirrel: the Act 1 side deck holds only the opening hand's squirrels plus one to draw.
     /// </summary>
     [HarmonyPatch]
     internal static class OneSquirrelPatch
@@ -61,7 +61,7 @@ namespace LagartosChallenges
         private static void CutSideDeck(ref List<CardInfo> __result)
         {
             if (__result == null || !Challenges.IsActive(ChallengeKey.OneSquirrel)) return;
-            __result = TrapperRules.CutSideDeck(__result);
+            __result = TrapperRules.CutSideDeck(__result, HandRules.OpeningSquirrels(Challenges.IsActive(ChallengeKey.TwoSquirrels)));
         }
 
         /// <summary>Flashes the challenge icon when the opening hand is drawn.</summary>

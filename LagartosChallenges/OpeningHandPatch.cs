@@ -10,6 +10,7 @@ namespace LagartosChallenges
     /// Act 1 opening-hand changes for the two challenges, each usable without the other:
     /// <list type="bullet">
     /// <item><b>Unfair Hand</b>: replaces the draw with 1 squirrel + 3 plain random deck cards (no "fair hand").</item>
+    /// <item><b>Two Squirrels</b>: a second squirrel is drawn after the opening hand.</item>
     /// <item><b>Worthy Squirrel</b>: the opening squirrel (whichever draw produces it) gets the Double Blood sigil.</item>
     /// </list>
     /// </summary>
@@ -38,9 +39,37 @@ namespace LagartosChallenges
                 __result = DrawUnfairOpeningHand(__instance, fixedHand);
             }
 
+            if (Challenges.IsActive(ChallengeKey.TwoSquirrels))
+            {
+                __result = WithExtraSquirrels(__instance, __result);
+            }
+
             if (Plugin.WorthySquirrelActive)
             {
                 __result = WithDoubleBloodSquirrel(__result);
+            }
+        }
+
+        /// <summary>
+        /// Two Squirrels: runs the opening hand, then draws side-deck cards until the hand got
+        /// <see cref="HandRules.OpeningSquirrels"/> of them (the opening hand already drew one).
+        /// </summary>
+        /// <param name="piles">The draw piles drawing the hand.</param>
+        /// <param name="openingHand">The opening-hand coroutine to run first.</param>
+        /// <returns>Coroutine yielding the opening hand's steps, then the extra draws.</returns>
+        private static IEnumerator WithExtraSquirrels(CardDrawPiles3D piles, IEnumerator openingHand)
+        {
+            while (openingHand.MoveNext())
+            {
+                yield return openingHand.Current;
+            }
+
+            Challenges.ShowActivation(ChallengeKey.TwoSquirrels);
+            for (int i = 1; i < HandRules.OpeningSquirrels(twoSquirrels: true) && piles.SideDeck.CardsInDeck > 0; i++)
+            {
+                Plugin.Log.LogInfo("Two Squirrels: extra opening squirrel.");
+                piles.SidePile.Draw();
+                yield return piles.DrawFromSidePile();
             }
         }
 

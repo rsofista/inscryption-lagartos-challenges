@@ -11,14 +11,14 @@ public class ChallengeCatalogTests
     private static readonly string[] GameLanguages = { "fr", "it", "de", "es", "pt", "tr", "ru", "ja", "ko", "zhcn", "zhtw" };
 
     [Fact]
-    public void Catalog_has_27_challenges() => Assert.Equal(27, ChallengeCatalog.All.Count);
+    public void Catalog_has_28_challenges() => Assert.Equal(28, ChallengeCatalog.All.Count);
 
     [Fact]
     public void Every_key_appears_once() =>
         Assert.Equal(Enum.GetValues<ChallengeKey>().OrderBy(k => k), ChallengeCatalog.All.Select(c => c.Key).OrderBy(k => k));
 
     [Fact]
-    public void Titles_are_unique() => Assert.Equal(27, ChallengeCatalog.All.Select(c => c.Title).Distinct().Count());
+    public void Titles_are_unique() => Assert.Equal(28, ChallengeCatalog.All.Select(c => c.Title).Distinct().Count());
 
     [Theory]
     [InlineData(ChallengeKey.NoFirstTurnKill, 5)]
@@ -31,6 +31,7 @@ public class ChallengeCatalogTests
     [InlineData(ChallengeKey.Blood4Only, 20)]
     [InlineData(ChallengeKey.FreeOnly, 15)]
     [InlineData(ChallengeKey.OneSquirrel, 15)]
+    [InlineData(ChallengeKey.TwoSquirrels, -5)]
     [InlineData(ChallengeKey.NoCampfire, 5)]
     [InlineData(ChallengeKey.NoTradePelts, 10)]
     [InlineData(ChallengeKey.TotemKinship, -5)]

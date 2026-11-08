@@ -166,6 +166,7 @@ def make_all(write_png, assets, frame_active):
         "bones_only": single(BONE, 3),
         "free_only": single(ZERO, 4),
         "one_squirrel": with_digit(SQUIRREL, "1"),
+        "two_squirrels": with_digit(SQUIRREL, "2"),
         "no_bone_altar": event(ALTAR, 3),
         "no_mysterious_stones": event(STONES, 3),
         "no_mycologists": event(MUSHROOM, 3),

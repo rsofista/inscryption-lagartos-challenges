@@ -180,6 +180,19 @@ TEXTS += [
         "zhcn": ("一只松鼠", "起手之后，只剩一只松鼠可以抽。"),
         "zhtw": ("一隻松鼠", "起手之後，只剩一隻松鼠可以抽。"),
     }),
+    ("TwoSquirrels", "Two Squirrels", "Your opening hand has a second Squirrel.", {
+        "fr": ("Deux écureuils", "Votre main de départ contient un deuxième écureuil."),
+        "it": ("Due scoiattoli", "La tua mano iniziale ha un secondo scoiattolo."),
+        "de": ("Zwei Eichhörnchen", "Deine Starthand enthält ein zweites Eichhörnchen."),
+        "es": ("Dos ardillas", "Tu mano inicial tiene una segunda ardilla."),
+        "pt": ("Dois Esquilos", "Sua mão inicial tem um segundo esquilo."),
+        "tr": ("İki Sincap", "Başlangıç elinde ikinci bir sincap olur."),
+        "ru": ("Две белки", "В стартовой руке есть вторая белка."),
+        "ja": ("リス2匹", "最初の手札にリスがもう1匹加わる。"),
+        "ko": ("다람쥐 두 마리", "시작 패에 다람쥐가 한 마리 더 있다."),
+        "zhcn": ("两只松鼠", "起手多一只松鼠。"),
+        "zhtw": ("兩隻松鼠", "起手多一隻松鼠。"),
+    }),
 ]
 
 

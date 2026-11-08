@@ -1,6 +1,6 @@
 # Lagarto's Challenges
 
-Inscryption mod for **Kaycee's Mod** with 27 challenges and 6 pelt starter decks. It is a compilation: it replaces
+Inscryption mod for **Kaycee's Mod** with 28 challenges and 6 pelt starter decks. It is a compilation: it replaces
 the **Unfair Hand** and **Pelt Starter Hands** mods (uninstall them; BepInEx refuses to load them next to this one).
 
 Selected challenges show their icon with a yellow frame.
@@ -19,7 +19,8 @@ Selected challenges show their icon with a yellow frame.
 | 4 Blood Only | +20 | Same. |
 | Bones Only | +10 | Only cards costing Bones. |
 | Free Only | +15 | Only cards with no cost. |
-| One Squirrel | +15 | Side deck holds 2 squirrels: one for the opening hand, one to draw. |
+| One Squirrel | +15 | After your opening hand, only one squirrel is left to draw. |
+| Two Squirrels | -5 | Your opening hand gets a second squirrel (5 cards). |
 | No Bone Altar / Mysterious Stones / Mycologists / Deck Trial / Consumables / Campfire / Buy Pelts | +5 each | The node is still on the map; entering it flashes the icon, Leshy says "...", and you go back. |
 | No Trade Pelts | +10 | Same, for the Trader. |
 | Totem Kinship | -5 | The last totem head the woodcarver offers is a tribe from your deck (if it has any). |
@@ -88,6 +89,7 @@ unit tested; Harmony patches only read game state and apply their answers. Every
 - `KillCapPatches`: prefix on `LifeManager.ShowDamageSequence` caps damage; `LifeManager.Initialize` starts a battle;
   `Opponent.PostResetScalesSequence` (and every override) starts a boss phase.
 - `OneSquirrelPatch`: `Part1CardDrawPiles.SideDeckData` getter postfix.
+- Two Squirrels: `OpeningHandPatch` appends a side-pile draw to the opening-hand coroutine.
 - `EventSkipPatch`: prefix on `SpecialNodeHandler.StartSpecialNodeSequence`.
 - `TotemKinshipPatch`: postfix on `BuildTotemSequencer.GenerateTotemChoices`.
 - Absorbed: `OpeningHandPatch`, `SacrificeValuePatch`, `AnnoyingTradesPatches`, `PeltPixelPortraits`.

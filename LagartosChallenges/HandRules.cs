@@ -8,6 +8,11 @@ namespace LagartosChallenges
         /// <summary>Number of side-deck cards (squirrels) drawn into the opening hand. It gets the Double Blood sigil.</summary>
         public const int SquirrelCount = 1;
 
+        /// <summary>Side-deck squirrels the opening hand draws.</summary>
+        /// <param name="twoSquirrels">The Two Squirrels challenge is on.</param>
+        /// <returns>2 with Two Squirrels, otherwise 1.</returns>
+        public static int OpeningSquirrels(bool twoSquirrels) => twoSquirrels ? 2 : 1;
+
         /// <summary>Number of main-deck cards drawn into the opening hand.</summary>
         public const int DeckCardCount = 3;
 

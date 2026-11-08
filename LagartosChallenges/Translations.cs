@@ -131,6 +131,12 @@ namespace LagartosChallenges
         /// <summary>One Squirrel challenge description.</summary>
         public const string OneSquirrelDescription = "After your opening hand, only one Squirrel is left to draw.";
 
+        /// <summary>Two Squirrels challenge title. Also part of the challenge id, so never change it.</summary>
+        public const string TwoSquirrelsTitle = "Two Squirrels";
+
+        /// <summary>Two Squirrels challenge description.</summary>
+        public const string TwoSquirrelsDescription = "Your opening hand has a second Squirrel.";
+
         /// <summary>No Bone Altar challenge title. Also part of the challenge id, so never change it.</summary>
         public const string NoBoneAltarTitle = "No Bone Altar";
 
@@ -725,6 +731,34 @@ namespace LagartosChallenges
                     ["ko"] = "시작 패 이후 뽑을 다람쥐가 한 마리만 남는다.",
                     ["zhcn"] = "起手之后，只剩一只松鼠可以抽。",
                     ["zhtw"] = "起手之後，只剩一隻松鼠可以抽。",
+                },
+                [TwoSquirrelsTitle] = new Dictionary<string, string>
+                {
+                    ["fr"] = "Deux écureuils",
+                    ["it"] = "Due scoiattoli",
+                    ["de"] = "Zwei Eichhörnchen",
+                    ["es"] = "Dos ardillas",
+                    ["pt"] = "Dois Esquilos",
+                    ["tr"] = "İki Sincap",
+                    ["ru"] = "Две белки",
+                    ["ja"] = "リス2匹",
+                    ["ko"] = "다람쥐 두 마리",
+                    ["zhcn"] = "两只松鼠",
+                    ["zhtw"] = "兩隻松鼠",
+                },
+                [TwoSquirrelsDescription] = new Dictionary<string, string>
+                {
+                    ["fr"] = "Votre main de départ contient un deuxième écureuil.",
+                    ["it"] = "La tua mano iniziale ha un secondo scoiattolo.",
+                    ["de"] = "Deine Starthand enthält ein zweites Eichhörnchen.",
+                    ["es"] = "Tu mano inicial tiene una segunda ardilla.",
+                    ["pt"] = "Sua mão inicial tem um segundo esquilo.",
+                    ["tr"] = "Başlangıç elinde ikinci bir sincap olur.",
+                    ["ru"] = "В стартовой руке есть вторая белка.",
+                    ["ja"] = "最初の手札にリスがもう1匹加わる。",
+                    ["ko"] = "시작 패에 다람쥐가 한 마리 더 있다.",
+                    ["zhcn"] = "起手多一只松鼠。",
+                    ["zhtw"] = "起手多一隻松鼠。",
                 },
                 [NoBoneAltarTitle] = new Dictionary<string, string>
                 {
