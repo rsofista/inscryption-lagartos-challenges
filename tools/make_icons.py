@@ -125,12 +125,16 @@ YELLOW = (240, 200, 40, 255)
 
 
 def frame_active(img):
-    """Active variant: copy of a 49x49 icon with a 2px yellow square frame just inside the 2px margin."""
+    """Active variant: copy of a 49x49 icon with a 4px yellow square frame on its outer edge.
+
+    The game draws the active sprite behind the base icon, so only the base's transparent 2px margin (0..1) shows
+    the frame; the inner 2px (2..3) cover the icon's edge in case it is ever drawn on top.
+    """
     out = [list(row) for row in img]
-    for i in range(2, 47):
-        for t in (2, 3):
-            out[t][i] = out[46 - (t - 2)][i] = YELLOW
-            out[i][t] = out[i][46 - (t - 2)] = YELLOW
+    for i in range(49):
+        for t in range(4):
+            out[t][i] = out[48 - t][i] = YELLOW
+            out[i][t] = out[i][48 - t] = YELLOW
     return out
 
 
