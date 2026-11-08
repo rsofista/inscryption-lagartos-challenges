@@ -31,6 +31,7 @@
     <Compile Include="../LagartosChallenges/CardFilter.cs" Link="CardFilter.cs" />
     <Compile Include="../LagartosChallenges/OfferRules.cs" Link="OfferRules.cs" />
     <Compile Include="../LagartosChallenges/KillCapRules.cs" Link="KillCapRules.cs" />
+    <Compile Include="../LagartosChallenges/TrapperRules.cs" Link="TrapperRules.cs" />
   </ItemGroup>
 
 </Project>
