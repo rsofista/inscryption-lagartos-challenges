@@ -28,6 +28,8 @@
     <Compile Include="../LagartosChallenges/PeltDecks.cs" Link="PeltDecks.cs" />
     <Compile Include="../LagartosChallenges/Translations.cs" Link="Translations.cs" />
     <Compile Include="../LagartosChallenges/ChallengeCatalog.cs" Link="ChallengeCatalog.cs" />
+    <Compile Include="../LagartosChallenges/CardFilter.cs" Link="CardFilter.cs" />
+    <Compile Include="../LagartosChallenges/OfferRules.cs" Link="OfferRules.cs" />
   </ItemGroup>
 
 </Project>
