@@ -63,15 +63,18 @@ namespace LagartosChallenges
     /// Caps combat damage before <c>CombatPhaseManager.DoCombatPhase</c> turns overkill into teeth: it computes the
     /// excess from <c>DamageDealtThisPhase</c> right after <c>VisualizeDamageMovingToScales</c>, so the total is
     /// clamped on that coroutine's first step (it also shows the capped weights). Patches the state machine's
-    /// <c>MoveNext</c>: the one-argument coroutine stub is small enough for Mono to inline.
+    /// <c>MoveNext</c> of every declaration: Act 1 runs <c>CombatPhaseManager3D</c>'s override, never the base no-op.
     /// </summary>
     [HarmonyPatch]
     internal static class CombatDamageCapPatch
     {
-        /// <summary>The damage-to-scales coroutine's state machine step.</summary>
-        /// <returns>Its <c>MoveNext</c> method.</returns>
-        private static MethodBase TargetMethod() =>
-            AccessTools.EnumeratorMoveNext(AccessTools.Method(typeof(CombatPhaseManager), "VisualizeDamageMovingToScales"));
+        /// <summary>The damage-to-scales coroutine's state machine step, for the base class and every override.</summary>
+        /// <returns>Their <c>MoveNext</c> methods.</returns>
+        private static IEnumerable<MethodBase> TargetMethods() =>
+            PatchTargets.Declarations(AccessTools.GetTypesFromAssembly(typeof(CombatPhaseManager).Assembly),
+                    typeof(CombatPhaseManager), "VisualizeDamageMovingToScales")
+                .Select(m => (MethodBase)AccessTools.EnumeratorMoveNext(m))
+                .Where(m => m != null);
 
         /// <summary>Clamps <c>DamageDealtThisPhase</c> in a capped round (idempotent, so every step may run it).</summary>
         private static void Prefix()
@@ -99,10 +102,8 @@ namespace LagartosChallenges
         /// <summary>Every declaration of <c>PostResetScalesSequence</c> on Opponent and its subclasses.</summary>
         /// <returns>The methods to patch.</returns>
         private static IEnumerable<MethodBase> TargetMethods() =>
-            typeof(Opponent).Assembly.GetTypes()
-                .Where(t => typeof(Opponent).IsAssignableFrom(t))
-                .Select(t => AccessTools.DeclaredMethod(t, nameof(Opponent.PostResetScalesSequence)))
-                .Where(m => m != null && !m.IsAbstract)
+            PatchTargets.Declarations(AccessTools.GetTypesFromAssembly(typeof(Opponent).Assembly),
+                    typeof(Opponent), nameof(Opponent.PostResetScalesSequence))
                 .Cast<MethodBase>();
 
         /// <summary>The scales were just reset: the next round opens the new phase.</summary>

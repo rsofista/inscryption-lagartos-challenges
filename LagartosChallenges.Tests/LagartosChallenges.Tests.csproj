@@ -34,6 +34,7 @@
     <Compile Include="../LagartosChallenges/TrapperRules.cs" Link="TrapperRules.cs" />
     <Compile Include="../LagartosChallenges/EventRules.cs" Link="EventRules.cs" />
     <Compile Include="../LagartosChallenges/TotemRules.cs" Link="TotemRules.cs" />
+    <Compile Include="../LagartosChallenges/PatchTargets.cs" Link="PatchTargets.cs" />
   </ItemGroup>
 
 </Project>
