@@ -13,7 +13,7 @@ namespace LagartosChallenges
         Blood1Only, Blood2Only, Blood3Only, Blood4Only, BonesOnly, FreeOnly,
         OneSquirrel, TwoSquirrels,
         NoBoneAltar, NoMysteriousStones, NoMycologists, NoDeckTrial, NoConsumables, NoCampfire, NoBuyPelts, NoTradePelts,
-        TotemKinship,
+        TotemKinship, ForbiddenCards,
         UnfairHand, WorthySquirrel, AnnoyingTrades,
     }
 
@@ -104,6 +104,7 @@ namespace LagartosChallenges
             new ChallengeDef(ChallengeKey.NoBuyPelts, Translations.NoBuyPeltsTitle, Translations.NoBuyPeltsDescription, 5),
             new ChallengeDef(ChallengeKey.NoTradePelts, Translations.NoTradePeltsTitle, Translations.NoTradePeltsDescription, 10),
             new ChallengeDef(ChallengeKey.TotemKinship, Translations.TotemKinshipTitle, Translations.TotemKinshipDescription, -5),
+            new ChallengeDef(ChallengeKey.ForbiddenCards, Translations.ForbiddenCardsTitle, Translations.ForbiddenCardsDescription, -5),
             new ChallengeDef(ChallengeKey.UnfairHand, Translations.UnfairHandTitle, Translations.UnfairHandDescription, 5),
             new ChallengeDef(ChallengeKey.WorthySquirrel, Translations.WorthySquirrelTitle, Translations.WorthySquirrelDescription, -5),
             new ChallengeDef(ChallengeKey.AnnoyingTrades, Translations.AnnoyingTradesTitle, Translations.AnnoyingTradesDescription, 5),

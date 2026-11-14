@@ -5,9 +5,10 @@ The 24 new challenge icons live in challenge_icons.py; every active variant is t
 
 Run: python tools/make_icons.py
 
-- deck_*.png (35x44): starter deck icons, one small pelt per card (2 on top, 1 below).
+- deck_*.png (35x44): starter deck icons, white silhouettes on transparent like the vanilla ones (the game masks
+  them to one colour): 3 small pelts stacked (Rabbit plain, Wolf striped, Golden gridded), or the Royal's skull.
 - thunderstore/icon.png (256x256): nine challenge icons in a 3x3 grid, upscaled.
-- pixel_*.png (41x28): Act II style pixel portraits for the three pelts, which the base game lacks. The Kaycee's
+- pixel_*.png (41x28): Act II style pixel portraits for the deck cards (pelts, Royal's crew), which the base game lacks. The Kaycee's
   Mod starter deck screen draws cards in that style. Black silhouette with 50% black shading, like the game's own.
 - annoying_trades_icon*.png (49x49): Annoying Trades challenge, a pelt turning into an Annoying card.
   Same frame and palette as the Unfair Hand icons (2px transparent margin, dark/red background).
@@ -87,20 +88,6 @@ def rect(img, x0, y0, x1, y1, colour):
     for y in range(y0, y1 + 1):
         for x in range(x0, x1 + 1):
             img[y][x] = colour
-
-
-def deck_icon(name, pelts):
-    """35x44 deck icon: dark card with a brown border and 3 pelts (2 on top, 1 below). Returns the image."""
-    img = canvas(35, 44, BG)
-    for x in range(35):
-        img[0][x] = img[43][x] = BROWN
-    for y in range(44):
-        img[y][0] = img[y][34] = BROWN
-    slots = [(7, 9), (19, 9), (13, 24)]
-    for (fill, shade), (x, y) in zip(pelts, slots):
-        stamp(img, PELT, x, y, {"f": fill, "s": shade, "o": OUTLINE})
-    write_png(os.path.join(ASSETS, name), img)
-    return img
 
 
 def challenge_icon(name, background):
@@ -216,8 +203,10 @@ def line(mask, x0, y0, x1, y1, thick):
         ellipse(mask, x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, thick / 2, thick / 2)
 
 
-def pixel_portrait(name, mask, ink=(), holes=()):
-    """41x28 portrait: mask edge in black, inside at 50% black, plus extra black pixels and see-through holes."""
+def pixel_portrait(name, shape):
+    """41x28 portrait from a (mask, ink, holes) shape: mask edge in black, inside at 50% black, ink pixels in
+    black and holes see-through."""
+    mask, ink, holes = shape
     img = canvas(41, 28, CLEAR)
     for (x, y) in mask:
         edge = any((x + dx, y + dy) not in mask for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
@@ -229,7 +218,7 @@ def pixel_portrait(name, mask, ink=(), holes=()):
     write_png(os.path.join(ASSETS, name), img)
 
 
-def rabbit_portrait():
+def rabbit_shape():
     """Rabbit Pelt: small flat hide, long ears swept back, short legs, puff tail."""
     m = set()
     ellipse(m, 22, 14, 9, 6)
@@ -240,10 +229,10 @@ def rabbit_portrait():
         line(m, x0, 10, x1, 5, 3)
         line(m, x0, 18, x1, 23, 3)
     ellipse(m, 32, 14, 2.5, 2.5)
-    pixel_portrait("pixel_rabbit.png", m, holes=[(10, 12), (10, 16)])
+    return m, [], [(10, 12), (10, 16)]
 
 
-def wolf_portrait():
+def wolf_shape():
     """Wolf Pelt: big flat hide, pointed ears, snout, clawed legs, bushy tail, dark spine."""
     m = set()
     ellipse(m, 21, 14, 11, 7)
@@ -258,11 +247,10 @@ def wolf_portrait():
     ellipse(m, 36, 14, 3.5, 2.5)
     spine = [(x, 14) for x in range(13, 31) if x % 3 != 0]
     claws = [(9, 1), (11, 1), (31, 1), (33, 1), (9, 27), (11, 27), (31, 27), (33, 27)]
-    pixel_portrait("pixel_wolf.png", m, ink=spine + [c for c in claws if 0 <= c[1] < 28],
-                   holes=[(7, 12), (7, 16)])
+    return m, spine + claws, [(7, 12), (7, 16)]
 
 
-def golden_portrait():
+def golden_shape():
     """Golden Pelt (the game's golden fleece): curly-edged fleece, floppy ears, hooves, sparkles."""
     import math
     m = set()
@@ -276,28 +264,180 @@ def golden_portrait():
     for x0, x1 in ((14, 11), (28, 31)):
         line(m, x0, 8, x1, 3, 2)
         line(m, x0, 20, x1, 25, 2)
-    curls = [(x, y) for (x, y) in ((16, 12), (17, 11), (22, 11), (23, 12), (27, 13), (28, 14),
-                                   (15, 16), (16, 17), (20, 15), (21, 16), (25, 17), (26, 16))]
+    curls = [(16, 12), (17, 11), (22, 11), (23, 12), (27, 13), (28, 14),
+             (15, 16), (16, 17), (20, 15), (21, 16), (25, 17), (26, 16)]
     hooves = [(10, 2), (11, 2), (31, 2), (32, 2), (10, 26), (11, 26), (31, 26), (32, 26)]
     sparkles = []
     for cx, cy in ((2, 2), (38, 3), (38, 24), (2, 25)):
         sparkles += [(cx, cy), (cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)]
-    pixel_portrait("pixel_golden.png", m, ink=curls + hooves + sparkles, holes=[(7, 13), (7, 15)])
+    return m, curls + hooves + sparkles, [(7, 13), (7, 15)]
+
+
+def mole_seaman_shape():
+    """Mole Seaman: hunched blind mole facing right, long snout, big shovel claws, sailor cap with a band."""
+    m = set()
+    ellipse(m, 17, 17, 12, 8)
+    ellipse(m, 29, 14, 6, 5)
+    line(m, 33, 15, 38, 17, 3)
+    ellipse(m, 31, 23, 5, 3)
+    ellipse(m, 8, 24, 4, 2.5)
+    ellipse(m, 28, 7, 5, 2.5)
+    line(m, 22, 9, 35, 9, 2)
+    band = [(x, 8) for x in range(24, 33)]
+    nose = [(38, 16), (38, 17), (39, 17)]
+    fingers = [(x, y) for x in (28, 30, 32, 34) for y in (24, 25)] + [(x, 25) for x in (6, 8, 10)]
+    arm = [(x, 20) for x in range(27, 35)] + [(x, 21) for x in range(4, 12)]
+    return m, band + nose + fingers + arm, []
+
+
+def skeleton_crew_shape():
+    """Skeleton Crew: grinning skull in a pirate bandana over crossed bones."""
+    m = set()
+    for (x0, y0, x1, y1) in ((7, 14, 33, 25), (7, 25, 33, 14)):
+        line(m, x0, y0, x1, y1, 2)
+        for (bx, by) in ((x0, y0), (x1, y1)):
+            side = -1 if bx < 20 else 1
+            ellipse(m, bx + side, by - 1.5, 2, 2)
+            ellipse(m, bx + side, by + 1.5, 2, 2)
+    ellipse(m, 20, 11, 9, 8)
+    ellipse(m, 20, 18, 6, 4)
+    line(m, 28, 5, 34, 2, 2)
+    line(m, 28, 6, 33, 9, 2)
+    bandana = [(x, y) for y in (4, 5) for x in range(12, 29) if (x, y) in m]
+    teeth = [(x, 20) for x in range(16, 25, 2)]
+    holes = [(x, y) for x in (15, 16, 17) for y in (10, 11, 12)] + [(x, y) for x in (23, 24, 25) for y in (10, 11, 12)]
+    holes += [(20, 15), (19, 16), (20, 16), (21, 16)]
+    return m, bandana + teeth, holes
+
+
+def zombie_parrot_shape():
+    """Zombie Parrot: undead parrot facing left, hooked beak, bare ribs, long tail, bony feet."""
+    m = set()
+    ellipse(m, 13, 8, 5, 5)
+    line(m, 8, 7, 6, 13, 3)
+    ellipse(m, 21, 15, 7, 8)
+    line(m, 24, 20, 34, 27, 3)
+    line(m, 21, 9, 30, 19, 3)
+    line(m, 18, 22, 17, 27, 1)
+    line(m, 23, 22, 23, 27, 1)
+    beak = [(7, 9), (8, 9), (7, 10)]
+    feet = [(16, 27), (18, 27), (22, 27), (24, 27)]
+    holes = [(12, 7), (13, 7), (12, 8), (13, 8)]
+    holes += [(x, y) for y in (12, 15, 18) for x in range(17, 23)]
+    return m, beak + feet, holes
+
+
+WHITE = (255, 255, 255, 255)
+
+# Starter deck icon pelts, 29x11 white silhouettes (X), seen from above: head left, tail right.
+# The deck screen fills the shape with one colour, so each pelt is told apart by its outline and holes (.):
+# Rabbit plain, Wolf striped (=), Golden gridded (#).
+DECK_RABBIT = [
+    "XX.....XX..........XX........",
+    ".XX.....XX........XX.........",
+    "..XX...XXXXXXXXXXXXXX........",
+    "...XXXXXXXXXXXXXXXXXXXX......",
+    "....XXXXXXXXXXXXXXXXXXXX.XXX.",
+    "....XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "....XXXXXXXXXXXXXXXXXXXX.XXX.",
+    "...XXXXXXXXXXXXXXXXXXXX......",
+    "..XX...XXXXXXXXXXXXXX........",
+    ".XX.....XX........XX.........",
+    "XX.....XX..........XX........",
+]
+DECK_WOLF = [
+    "...X..XX...........XX........",
+    "...XX..XX.........XX.........",
+    "...XXXXXXXXXXXXXXXXXXX.......",
+    "..XXXXXXXXXXXXXXXXXXXXX......",
+    ".XXXXXX............XXXXX.XXXX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    ".XXXXXX............XXXXX.XXXX",
+    "..XXXXXXXXXXXXXXXXXXXXX......",
+    "...XXXXXXXXXXXXXXXXXXX.......",
+    "...XX..XX.........XX.........",
+    "...X..XX...........XX........",
+]
+DECK_GOLDEN = [
+    ".......XX.X.X.X.X.XX.........",
+    "........XXXXXXXXXXX..........",
+    "..XX..XXXXXX.XXX.XXXX........",
+    ".XXXXXXX...........XXX.......",
+    "XXXXXXXXXXXX.XXX.XXXXXX.XX...",
+    "XXXXXXXXXXXX.XXX.XXXXXXXXXX..",
+    "XXXXXXXXXXXX.XXX.XXXXXX.XX...",
+    ".XXXXXXX...........XXX.......",
+    "..XX..XXXXXX.XXX.XXXX........",
+    "........XXXXXXXXXXX..........",
+    ".......XX.X.X.X.X.XX.........",
+]
+
+# Royal's Crew: a pirate skull with an eye patch (the Royal is the boss whose crew these cards are). 29x34.
+DECK_SKULL = [
+    "...........XXXXXXX...........",
+    "........XXXXXXXXXXXXX........",
+    "......XXXXXXXXXXXXXXXXX......",
+    ".....XXXXXXXXXXXXXXXXXXX.....",
+    "....XXXXXXXXXXXXXXXXXXXXX....",
+    "...XXXXXXXXXXXXXXXXXXXXXXX...",
+    "..XXXXXXXXXXXXXXXXXXXXXXXXX..",
+    "..XX..XXXXXXXXXXXXXXXXXXXXX..",
+    ".XXXXX..XXXXXXXXXXXXXXXXXXXX.",
+    ".XXXXXXX..XXXXXXXXXXXXXXXXXX.",
+    ".XXXXXXXXX..XXXXXXXXXXXXXXXX.",
+    "XXXXXXXXXXXX..XXXXXXXXXXXXXXX",
+    "XXXXXXX.XXXXXX..XXXXXXXXXXXXX",
+    "XXXXX.XXXXXXXXX..XXXXXXXXXXXX",
+    "XXXX.XXXXXXXXXXX.XX.....XXXXX",
+    "XXXX.XXXXXXXXXXX.X.......XXXX",
+    "XXXX.XXXXXXXXXXX.X.......XXXX",
+    "XXXXX.XXXXXXXXX.XX.......XXXX",
+    ".XXXXX.XXXXXXX.XXXX.....XXXX.",
+    ".XXXXXX.......XXXXXXXXXXXXXX.",
+    "..XXXXXXXXXXXXXXX.XXXXXXXXX..",
+    "...XXXXXXXXXXXXX...XXXXXXX...",
+    "....XXXXXXXXXXX.....XXXXX....",
+    ".....XXXXXXXXXXX...XXXXX.....",
+    "......XXXXXXXXXXXXXXXXX......",
+    "......XXXXXXXXXXXXXXXXX......",
+    ".......XXXXXXXXXXXXXXX.......",
+    ".......X.X.X.X.X.X.X.X.......",
+    ".......XXXXXXXXXXXXXXX.......",
+    "........XXXXXXXXXXXXX........",
+    ".........XXXXXXXXXXX.........",
+]
+
+
+def deck_icon(name, patterns, gap=2):
+    """35x44 starter deck icon: white silhouettes on transparent, stacked top to bottom and centred, like the
+    vanilla icons. The deck screen draws it through a SpriteMask (alpha only, one fill colour), so colour and
+    opaque backgrounds are lost. Returns the image."""
+    img = canvas(35, 44, CLEAR)
+    height = sum(len(p) for p in patterns) + gap * (len(patterns) - 1)
+    y = (44 - height) // 2
+    for pattern in patterns:
+        stamp(img, pattern, (35 - len(pattern[0])) // 2, y, {"X": WHITE})
+        y += len(pattern) + gap
+    write_png(os.path.join(ASSETS, name), img)
+    return img
 
 
 def main():
     os.makedirs(ASSETS, exist_ok=True)
-    deck_icon("deck_rabbit.png", [RABBIT] * 3)
-    deck_icon("deck_rabbit_wolf.png", [RABBIT] * 2 + [WOLF])
-    deck_icon("deck_rabbit_golden.png", [RABBIT] * 2 + [GOLDEN])
-    deck_icon("deck_wolf_rabbit.png", [RABBIT] + [WOLF] * 2)
-    assortment = deck_icon("deck_assortment.png", [RABBIT, WOLF, GOLDEN])
-    deck_icon("deck_wolf_golden.png", [WOLF] * 2 + [GOLDEN])
-    deck_icon("deck_golden_wolf.png", [WOLF] + [GOLDEN] * 2)
-    deck_icon("deck_golden.png", [GOLDEN] * 3)
-    rabbit_portrait()
-    wolf_portrait()
-    golden_portrait()
+    rabbit, wolf, golden = DECK_RABBIT, DECK_WOLF, DECK_GOLDEN
+    deck_icon("deck_rabbit.png", [rabbit] * 3)
+    deck_icon("deck_rabbit_wolf.png", [rabbit] * 2 + [wolf])
+    deck_icon("deck_rabbit_golden.png", [rabbit] * 2 + [golden])
+    deck_icon("deck_wolf_rabbit.png", [rabbit] + [wolf] * 2)
+    deck_icon("deck_assortment.png", [rabbit, wolf, golden])
+    deck_icon("deck_wolf_golden.png", [wolf] * 2 + [golden])
+    deck_icon("deck_golden_wolf.png", [wolf] + [golden] * 2)
+    deck_icon("deck_golden.png", [golden] * 3)
+    deck_icon("deck_royal.png", [DECK_SKULL])
+    for name, shape in (("rabbit", rabbit_shape), ("wolf", wolf_shape), ("golden", golden_shape),
+                        ("mole_seaman", mole_seaman_shape), ("skeleton_crew", skeleton_crew_shape),
+                        ("zombie_parrot", zombie_parrot_shape)):
+        pixel_portrait("pixel_%s.png" % name, shape())
     annoying = challenge_icon("annoying_trades_icon.png", BG)
     write_png(os.path.join(ASSETS, "annoying_trades_icon_activated.png"), frame_active(annoying))
     for name in ("unfair_hand", "worthy_squirrel"):

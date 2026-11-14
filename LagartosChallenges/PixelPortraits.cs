@@ -11,7 +11,7 @@ namespace LagartosChallenges
     /// Gives the three pelts Act II style pixel portraits. The base game has none, and the Kaycee's Mod starter deck
     /// screen draws a deck's cards in that style, so the pelt decks' cards would show up blank.
     /// </summary>
-    internal static class PeltPixelPortraits
+    internal static class PixelPortraits
     {
         /// <summary>Card name → portrait sprite, built once from the embedded PNGs.</summary>
         private static readonly Dictionary<string, Sprite> Sprites = new Dictionary<string, Sprite>();
@@ -22,7 +22,7 @@ namespace LagartosChallenges
         /// </summary>
         internal static void Register()
         {
-            foreach (var entry in PeltDecks.PixelPortraits)
+            foreach (var entry in StarterDecks.PixelPortraits)
             {
                 Texture2D texture = TextureHelper.GetImageAsTexture(entry.Value, typeof(Plugin).Assembly);
                 Sprites[entry.Key] = texture.ConvertTexture(TextureHelper.SpriteType.PixelPortrait, FilterMode.Point);

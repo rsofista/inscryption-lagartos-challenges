@@ -53,4 +53,29 @@ public class PatchTargetsTests
     public void Skips_abstract_declarations() =>
         Assert.Equal(new[] { typeof(Manager3D) },
             PatchTargets.Declarations(AllTypes, typeof(Manager), "Other").Select(m => m.DeclaringType!));
+
+    /// <summary>Stand-in for CombatPhaseManager: an auto-property with a private setter.</summary>
+    public class Combat
+    {
+        /// <summary>Like <c>DamageDealtThisPhase</c>.</summary>
+        public int Dealt { get; private set; }
+    }
+
+    /// <summary>Stand-in for CombatPhaseManager3D (the runtime type in Act 1).</summary>
+    public class Combat3D : Combat { }
+
+    [Fact]
+    public void Private_setter_is_invisible_from_the_subclass()
+    {
+        // Why Traverse.Create(combat3D).Property(...).SetValue threw "Set Method not found" in game.
+        Assert.Null(typeof(Combat3D).GetProperty(nameof(Combat.Dealt))!.GetSetMethod(nonPublic: true));
+    }
+
+    [Fact]
+    public void SetProperty_uses_the_declaring_type_setter_on_a_subclass_instance()
+    {
+        Combat combat = new Combat3D();
+        PatchTargets.SetProperty(combat, typeof(Combat), nameof(Combat.Dealt), 5);
+        Assert.Equal(5, combat.Dealt);
+    }
 }

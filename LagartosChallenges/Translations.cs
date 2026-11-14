@@ -37,21 +37,20 @@ namespace LagartosChallenges
         public const string AnnoyingTradesTitle = "Annoying Trades";
 
         /// <summary>Annoying Trades challenge description.</summary>
-        public const string AnnoyingTradesDescription =
-            "Annoying Starters also affects pelts. At every trade, if any of your pelts is Annoying, all offered cards are too.";
+        public const string AnnoyingTradesDescription = "Annoying Starters also hits pelts and what they trade for.";
 
         // <generated-constants> (tools/new_texts.py writes this region; edit the texts there)
         /// <summary>No First Turn Kill challenge title. Also part of the challenge id, so never change it.</summary>
         public const string NoFirstTurnKillTitle = "No First Turn Kill";
 
         /// <summary>No First Turn Kill challenge description.</summary>
-        public const string NoFirstTurnKillDescription = "Nobody can win or lose a battle on their first turn: that damage stops one short.";
+        public const string NoFirstTurnKillDescription = "No battle can be won or lost on anyone's first turn.";
 
         /// <summary>No Phase Turn Kill challenge title. Also part of the challenge id, so never change it.</summary>
         public const string NoPhaseTurnKillTitle = "No Phase Turn Kill";
 
         /// <summary>No Phase Turn Kill challenge description.</summary>
-        public const string NoPhaseTurnKillDescription = "Nobody can win or lose a boss phase on their first turn after the scales reset.";
+        public const string NoPhaseTurnKillDescription = "No boss phase can be won or lost on its first turn.";
 
         /// <summary>Canine Only challenge title. Also part of the challenge id, so never change it.</summary>
         public const string CanineOnlyTitle = "Canine Only";
@@ -136,6 +135,12 @@ namespace LagartosChallenges
 
         /// <summary>Two Squirrels challenge description.</summary>
         public const string TwoSquirrelsDescription = "Your opening hand has a second Squirrel.";
+
+        /// <summary>Forbidden Cards challenge title. Also part of the challenge id, so never change it.</summary>
+        public const string ForbiddenCardsTitle = "Forbidden Cards";
+
+        /// <summary>Forbidden Cards challenge description.</summary>
+        public const string ForbiddenCardsDescription = "The Great Kraken and boss cards join the offers.";
 
         /// <summary>No Bone Altar challenge title. Also part of the challenge id, so never change it.</summary>
         public const string NoBoneAltarTitle = "No Bone Altar";
@@ -299,17 +304,17 @@ namespace LagartosChallenges
                 },
                 [AnnoyingTradesDescription] = new Dictionary<string, string>
                 {
-                    ["fr"] = "« Fureur du défi » touche aussi les fourrures. À chaque échange, si une de vos fourrures a Fureur, toutes les cartes proposées l'ont aussi.",
-                    ["it"] = "«Carte iniziali irritanti» vale anche per le pelli. A ogni scambio, se una tua pelle è Irritante, lo sono anche tutte le carte offerte.",
-                    ["de"] = "„Nervige Startkarten“ gilt auch für Felle. Bei jedem Tausch: Ist eines deiner Felle nervig, sind es alle angebotenen Karten auch.",
-                    ["es"] = "«Molestias iniciales» también afecta a las pieles. En cada trueque, si alguna de tus pieles es Molesta, todas las cartas ofrecidas también.",
-                    ["pt"] = "\"Irritação inicial\" também afeta as peles. Em toda troca, se alguma das suas peles for Irritante, todas as cartas oferecidas também serão.",
-                    ["tr"] = "\"Sinir Bozucu Başlangıç Destesi\" postları da etkiler. Her takasta postlarından biri Sinir Bozucu ise sunulan tüm kartlar da öyle olur.",
-                    ["ru"] = "«Надоеды в начале» действует и на шкуры. При каждом обмене, если хоть одна шкура с символом Надоеды, все предложенные карты получат его.",
-                    ["ja"] = "「嫌がらせ」スターターが皮にも適用される。取引のたびに、「嫌がらせ」の皮が1枚でもあれば、提示されるカードすべてが「嫌がらせ」になる。",
-                    ["ko"] = "구타유발자 시작이 가죽에도 적용된다. 거래할 때마다 구타유발자 가죽이 하나라도 있으면 제시되는 모든 카드가 구타유발자가 된다.",
-                    ["zhcn"] = "惹人生厌的开局也作用于皮草。每次交易时，只要有一张皮草带有惹人生厌印记，提供的所有卡牌也都会带有该印记。",
-                    ["zhtw"] = "煩躁起手也會影響皮草。每次交易時，只要有一張皮草帶有煩躁印記，提供的所有卡牌也都會有煩躁印記。",
+                    ["fr"] = "« Fureur du défi » touche aussi les fourrures et leurs échanges.",
+                    ["it"] = "«Carte iniziali irritanti» vale anche per pelli e scambi.",
+                    ["de"] = "„Nervige Startkarten“ gilt auch für Felle und ihre Tausche.",
+                    ["es"] = "«Molestias iniciales» afecta también a pieles y trueques.",
+                    ["pt"] = "\"Irritação inicial\" também afeta peles e suas trocas.",
+                    ["tr"] = "\"Sinir Bozucu Başlangıç Destesi\" postları ve takasları da etkiler.",
+                    ["ru"] = "«Надоеды в начале» действуют и на шкуры, и на обмен.",
+                    ["ja"] = "「嫌がらせ」スターターが皮と取引にも適用される。",
+                    ["ko"] = "구타유발자 시작이 가죽과 거래에도 적용된다.",
+                    ["zhcn"] = "惹人生厌的开局也作用于皮草和交易。",
+                    ["zhtw"] = "煩躁起手也會影響皮草和交易。",
                 },
                 // <generated-entries> (tools/new_texts.py)
                 [NoFirstTurnKillTitle] = new Dictionary<string, string>
@@ -328,17 +333,17 @@ namespace LagartosChallenges
                 },
                 [NoFirstTurnKillDescription] = new Dictionary<string, string>
                 {
-                    ["fr"] = "Personne ne peut gagner ou perdre un combat à son premier tour : ces dégâts s'arrêtent à un point.",
-                    ["it"] = "Nessuno può vincere o perdere una battaglia al primo turno: quel danno si ferma a un punto.",
-                    ["de"] = "Niemand kann einen Kampf in seinem ersten Zug gewinnen oder verlieren: Der Schaden stoppt einen Punkt davor.",
-                    ["es"] = "Nadie puede ganar ni perder un combate en su primer turno: ese daño se queda a uno.",
-                    ["pt"] = "Ninguém pode vencer ou perder uma batalha no primeiro turno: esse dano para a um ponto.",
-                    ["tr"] = "Kimse ilk turunda bir savaşı kazanamaz ya da kaybedemez: o hasar bir eksikte durur.",
-                    ["ru"] = "Никто не может выиграть или проиграть бой в свой первый ход: урон останавливается за одно очко.",
-                    ["ja"] = "最初のターンでは誰もバトルに勝つことも負けることもできない。そのダメージはあと1つで止まる。",
-                    ["ko"] = "누구도 첫 턴에 전투를 이기거나 질 수 없다. 그 피해는 1 모자라게 멈춘다.",
-                    ["zhcn"] = "任何一方都无法在自己的第一回合赢下或输掉战斗：伤害会停在差一点的位置。",
-                    ["zhtw"] = "任何一方都無法在自己的第一回合贏下或輸掉戰鬥：傷害會停在差一點的位置。",
+                    ["fr"] = "Aucun combat ne se gagne ni ne se perd au premier tour.",
+                    ["it"] = "Nessuna battaglia si vince o si perde al primo turno.",
+                    ["de"] = "Kein Kampf wird im ersten Zug gewonnen oder verloren.",
+                    ["es"] = "Ningún combate se gana ni se pierde en el primer turno.",
+                    ["pt"] = "Nenhuma batalha é vencida ou perdida no primeiro turno.",
+                    ["tr"] = "Hiçbir savaş ilk turda kazanılamaz ya da kaybedilemez.",
+                    ["ru"] = "Бой нельзя выиграть или проиграть в первый ход.",
+                    ["ja"] = "最初のターンではバトルの勝敗はつかない。",
+                    ["ko"] = "첫 턴에는 전투의 승패가 나지 않는다.",
+                    ["zhcn"] = "第一回合无法决出战斗胜负。",
+                    ["zhtw"] = "第一回合無法決出戰鬥勝負。",
                 },
                 [NoPhaseTurnKillTitle] = new Dictionary<string, string>
                 {
@@ -356,17 +361,17 @@ namespace LagartosChallenges
                 },
                 [NoPhaseTurnKillDescription] = new Dictionary<string, string>
                 {
-                    ["fr"] = "Personne ne peut gagner ou perdre une phase de boss à son premier tour après la remise à zéro de la balance.",
-                    ["it"] = "Nessuno può vincere o perdere una fase del boss al primo turno dopo l'azzeramento della bilancia.",
-                    ["de"] = "Niemand kann eine Bossphase im ersten Zug nach dem Zurücksetzen der Waage gewinnen oder verlieren.",
-                    ["es"] = "Nadie puede ganar ni perder una fase de jefe en su primer turno tras reiniciarse la balanza.",
-                    ["pt"] = "Ninguém pode vencer ou perder uma fase de chefe no primeiro turno depois que a balança zera.",
-                    ["tr"] = "Kimse terazi sıfırlandıktan sonraki ilk turunda bir patron aşamasını kazanamaz ya da kaybedemez.",
-                    ["ru"] = "Никто не может выиграть или проиграть фазу босса в свой первый ход после сброса весов.",
-                    ["ja"] = "天秤がリセットされた後の最初のターンでは、誰もボスのフェーズに勝つことも負けることもできない。",
-                    ["ko"] = "저울이 초기화된 뒤 첫 턴에는 누구도 보스 페이즈를 이기거나 질 수 없다.",
-                    ["zhcn"] = "天平重置后的第一回合，任何一方都无法赢下或输掉首领阶段。",
-                    ["zhtw"] = "天平重置後的第一回合，任何一方都無法贏下或輸掉首領階段。",
+                    ["fr"] = "Aucune phase de boss ne se gagne ni ne se perd à son premier tour.",
+                    ["it"] = "Nessuna fase del boss si vince o si perde al primo turno.",
+                    ["de"] = "Keine Bossphase wird im ersten Zug gewonnen oder verloren.",
+                    ["es"] = "Ninguna fase de jefe se gana ni se pierde en su primer turno.",
+                    ["pt"] = "Nenhuma fase de chefe é vencida ou perdida no primeiro turno.",
+                    ["tr"] = "Hiçbir patron aşaması ilk turunda kazanılamaz ya da kaybedilemez.",
+                    ["ru"] = "Фазу босса нельзя выиграть или проиграть в первый ход.",
+                    ["ja"] = "ボスのフェーズの最初のターンでは勝敗はつかない。",
+                    ["ko"] = "보스 페이즈 첫 턴에는 승패가 나지 않는다.",
+                    ["zhcn"] = "首领阶段的第一回合无法决出胜负。",
+                    ["zhtw"] = "首領階段的第一回合無法決出勝負。",
                 },
                 [CanineOnlyTitle] = new Dictionary<string, string>
                 {
@@ -722,7 +727,7 @@ namespace LagartosChallenges
                 {
                     ["fr"] = "Après votre main de départ, il ne reste qu'un écureuil à piocher.",
                     ["it"] = "Dopo la mano iniziale resta un solo scoiattolo da pescare.",
-                    ["de"] = "Nach deiner Starthand bleibt nur ein Eichhörnchen zum Ziehen übrig.",
+                    ["de"] = "Nach der Starthand bleibt nur ein Eichhörnchen zum Ziehen.",
                     ["es"] = "Tras tu mano inicial, solo queda una ardilla por robar.",
                     ["pt"] = "Depois da mão inicial, só resta um esquilo para comprar.",
                     ["tr"] = "Başlangıç elinden sonra çekilecek tek bir sincap kalır.",
@@ -759,6 +764,34 @@ namespace LagartosChallenges
                     ["ko"] = "시작 패에 다람쥐가 한 마리 더 있다.",
                     ["zhcn"] = "起手多一只松鼠。",
                     ["zhtw"] = "起手多一隻松鼠。",
+                },
+                [ForbiddenCardsTitle] = new Dictionary<string, string>
+                {
+                    ["fr"] = "Cartes interdites",
+                    ["it"] = "Carte proibite",
+                    ["de"] = "Verbotene Karten",
+                    ["es"] = "Cartas prohibidas",
+                    ["pt"] = "Cartas Proibidas",
+                    ["tr"] = "Yasak Kartlar",
+                    ["ru"] = "Запретные карты",
+                    ["ja"] = "禁じられたカード",
+                    ["ko"] = "금지된 카드",
+                    ["zhcn"] = "禁忌卡牌",
+                    ["zhtw"] = "禁忌卡牌",
+                },
+                [ForbiddenCardsDescription] = new Dictionary<string, string>
+                {
+                    ["fr"] = "Le Grand Kraken et les cartes de boss rejoignent les offres.",
+                    ["it"] = "Il Grande Kraken e le carte dei boss si uniscono alle offerte.",
+                    ["de"] = "Der Große Krake und Bosskarten kommen in die Angebote.",
+                    ["es"] = "El Gran Kraken y las cartas de jefe se unen a las ofertas.",
+                    ["pt"] = "O Grande Kraken e as cartas de chefe entram nas ofertas.",
+                    ["tr"] = "Büyük Kraken ve patron kartları tekliflere katılır.",
+                    ["ru"] = "Великий Кракен и карты боссов попадают в предложения.",
+                    ["ja"] = "グレート・クラーケンとボスのカードが提示される。",
+                    ["ko"] = "거대 크라켄과 보스 카드가 제시된다.",
+                    ["zhcn"] = "巨型海妖和首领卡牌会加入可选卡牌。",
+                    ["zhtw"] = "巨型海妖和首領卡牌會加入可選卡牌。",
                 },
                 [NoBoneAltarTitle] = new Dictionary<string, string>
                 {

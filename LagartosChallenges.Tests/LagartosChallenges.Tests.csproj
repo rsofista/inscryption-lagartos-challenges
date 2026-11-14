@@ -25,7 +25,7 @@
     <Compile Include="../LagartosChallenges/HandRules.cs" Link="HandRules.cs" />
     <Compile Include="../LagartosChallenges/DoubleBloodGrant.cs" Link="DoubleBloodGrant.cs" />
     <Compile Include="../LagartosChallenges/AnnoyingRules.cs" Link="AnnoyingRules.cs" />
-    <Compile Include="../LagartosChallenges/PeltDecks.cs" Link="PeltDecks.cs" />
+    <Compile Include="../LagartosChallenges/StarterDecks.cs" Link="StarterDecks.cs" />
     <Compile Include="../LagartosChallenges/Translations.cs" Link="Translations.cs" />
     <Compile Include="../LagartosChallenges/ChallengeCatalog.cs" Link="ChallengeCatalog.cs" />
     <Compile Include="../LagartosChallenges/CardFilter.cs" Link="CardFilter.cs" />
@@ -35,6 +35,7 @@
     <Compile Include="../LagartosChallenges/EventRules.cs" Link="EventRules.cs" />
     <Compile Include="../LagartosChallenges/TotemRules.cs" Link="TotemRules.cs" />
     <Compile Include="../LagartosChallenges/PatchTargets.cs" Link="PatchTargets.cs" />
+    <Compile Include="../LagartosChallenges/ForbiddenCards.cs" Link="ForbiddenCards.cs" />
   </ItemGroup>
 
 </Project>

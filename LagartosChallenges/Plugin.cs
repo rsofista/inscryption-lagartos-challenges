@@ -49,9 +49,9 @@ namespace LagartosChallenges
         {
             Log = Logger;
             RegisterTranslations();
-            PeltPixelPortraits.Register();
+            PixelPortraits.Register();
 
-            foreach (PeltDeck deck in PeltDecks.All)
+            foreach (StarterDeck deck in StarterDecks.All)
             {
                 StarterDeckManager.New(
                     PluginGuid,

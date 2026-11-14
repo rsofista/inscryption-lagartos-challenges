@@ -56,6 +56,9 @@ TOOTH = ["WWW", "WWW", "W.W"]
 ARROW = ["W....", "WW...", "WWWWW", "WW...", "W...."]
 TOTEM = ["..BBBBBBBBB..", ".BBWBBBBBWBB.", ".BBBBBBBBBBB.", "..BBDDBDDBB..", "..BBBBBBBBB..", "...BBDDDBB...",
          "....BBBBB....", ".....GGG.....", ".....GGG.....", "....GGGGG...."]
+# Open padlock: the forbidden cards are unlocked.
+PADLOCK = ["...GGGGG...", "..GG...GG..", "..G.....G..", "..G.....G..", "..G........", "..G........",
+           "YYYYYYYYY..", "YYYDDDYYY..", "YYYDDDYYY..", "YYYYDYYYY..", "YYYYDYYYY..", "YYYYYYYYY.."]
 
 # Shown on thunderstore/icon.png.
 STORE_ICONS = ["no_first_turn_kill", "insect_only", "blood2_only", "one_squirrel", "no_campfire",
@@ -176,6 +179,7 @@ def make_all(write_png, assets, frame_active):
         "no_buy_pelts": buy_pelts(),
         "no_trade_pelts": trade_pelts(),
         "totem_kinship": single(TOTEM, 3),
+        "forbidden_cards": single(PADLOCK, 3),
     }
     for key, img in icons.items():
         write_png(os.path.join(assets, key + "_icon.png"), img)

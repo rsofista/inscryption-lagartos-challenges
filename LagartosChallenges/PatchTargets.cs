@@ -23,5 +23,17 @@ namespace LagartosChallenges
             types.Where(t => t != null && baseType.IsAssignableFrom(t))
                 .SelectMany(t => t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
                 .Where(m => m.Name == methodName && !m.IsAbstract);
+
+        /// <summary>
+        /// Sets a property through the type that declares it, so a private setter works on a subclass instance
+        /// (reflection from the subclass, which <c>Traverse.Create(instance)</c> does, cannot see it).
+        /// </summary>
+        /// <param name="target">Instance to update (may be a subclass of <paramref name="declaringType"/>).</param>
+        /// <param name="declaringType">Type that declares the property.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="value">New value.</param>
+        public static void SetProperty(object target, Type declaringType, string name, object value) =>
+            declaringType.GetProperty(name, BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .SetValue(target, value);
     }
 }

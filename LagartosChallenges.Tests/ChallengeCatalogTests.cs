@@ -11,14 +11,14 @@ public class ChallengeCatalogTests
     private static readonly string[] GameLanguages = { "fr", "it", "de", "es", "pt", "tr", "ru", "ja", "ko", "zhcn", "zhtw" };
 
     [Fact]
-    public void Catalog_has_28_challenges() => Assert.Equal(28, ChallengeCatalog.All.Count);
+    public void Catalog_has_29_challenges() => Assert.Equal(29, ChallengeCatalog.All.Count);
 
     [Fact]
     public void Every_key_appears_once() =>
         Assert.Equal(Enum.GetValues<ChallengeKey>().OrderBy(k => k), ChallengeCatalog.All.Select(c => c.Key).OrderBy(k => k));
 
     [Fact]
-    public void Titles_are_unique() => Assert.Equal(28, ChallengeCatalog.All.Select(c => c.Title).Distinct().Count());
+    public void Titles_are_unique() => Assert.Equal(29, ChallengeCatalog.All.Select(c => c.Title).Distinct().Count());
 
     [Theory]
     [InlineData(ChallengeKey.NoFirstTurnKill, 5)]
@@ -35,6 +35,7 @@ public class ChallengeCatalogTests
     [InlineData(ChallengeKey.NoCampfire, 5)]
     [InlineData(ChallengeKey.NoTradePelts, 10)]
     [InlineData(ChallengeKey.TotemKinship, -5)]
+    [InlineData(ChallengeKey.ForbiddenCards, -5)]
     [InlineData(ChallengeKey.UnfairHand, 5)]
     [InlineData(ChallengeKey.WorthySquirrel, -5)]
     [InlineData(ChallengeKey.AnnoyingTrades, 5)]
@@ -51,6 +52,14 @@ public class ChallengeCatalogTests
         Assert.Equal(title, def.Title);
         Assert.Equal(icon, def.IconFile);
         Assert.Equal(icon.Replace(".png", "_activated.png"), def.ActiveIconFile);
+    }
+
+    [Fact]
+    public void Forbidden_cards_title_and_icon()
+    {
+        ChallengeDef def = ChallengeCatalog.Get(ChallengeKey.ForbiddenCards);
+        Assert.Equal("Forbidden Cards", def.Title);
+        Assert.Equal("forbidden_cards_icon.png", def.IconFile);
     }
 
     [Fact]

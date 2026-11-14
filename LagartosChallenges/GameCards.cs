@@ -64,8 +64,7 @@ namespace LagartosChallenges
 
         /// <summary>
         /// Makes a fresh filler: a clone of the Rabbit Pelt with the Annoying sigil as a mod (like Annoying Starters).
-        /// Read straight from the card data so it never goes through <c>CardLoader.GetCardByName</c> (patched for
-        /// the Trapper).
+        /// Read straight from the card data.
         /// </summary>
         /// <returns>The filler card.</returns>
         internal static CardInfo MakeFiller()

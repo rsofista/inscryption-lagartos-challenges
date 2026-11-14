@@ -1,6 +1,8 @@
 # Lagarto's Challenges
 
-Inscryption mod for **Kaycee's Mod** with 28 challenges and 8 pelt starter decks.
+Inscryption mod for **Kaycee's Mod** with 29 challenges and 9 starter decks.
+
+Source code, issues and suggestions: https://github.com/rsofista/inscryption-lagartos-challenges
 
 > **Unfair Hand and Pelt Starter Hands are now part of this mod.** Everything they did (Unfair Hand, Worthy Squirrel,
 > Annoying Trades and the pelt starter decks) is included here, and those mods will no longer be updated.
@@ -12,7 +14,7 @@ Selected challenges show their icon with a yellow frame.
 
 | Challenge | Points | Effect |
 | --- | --- | --- |
-| No First Turn Kill | +5 | Nobody can win or lose a battle on their first turn: that damage stops one short (scale at ±4; 5 damage with Tipped Scales). Boss phase 1 only. |
+| No First Turn Kill | +5 | No battle can be won or lost on anyone's first turn: that damage stops one short (scale at ±4; 5 damage with Tipped Scales). Boss phase 1 only. |
 | No Phase Turn Kill | +5 | Same cap on each side's first turn after a boss's scales reset (phases 2 and 3). Pick both to cap every phase. |
 | Canine / Avian / Insect Only | +10 each | Every card you are offered is of that tribe. |
 | Reptile / Hooved Only | +15 each | Same. |
@@ -27,6 +29,7 @@ Selected challenges show their icon with a yellow frame.
 | No Bone Altar / Mysterious Stones / Mycologists / Deck Trial / Consumables / Campfire / Buy Pelts | +5 each | The node is still on the map; entering it flashes the icon, Leshy says "...", and you go back. |
 | No Trade Pelts | +10 | Same, for the Trader. |
 | Totem Kinship | -5 | The last totem head the woodcarver offers is a tribe from your deck (if it has any). |
+| Forbidden Cards | -5 | Cards you normally can't get join the offers: the Great Kraken joins the rares; Mole Seaman, Skeleton Crew, Zombie Parrot, Strange Frog, Pack Mule, The Smoke, Greater Smoke and Starvation join the card choices. |
 | Unfair Hand | +5 | Your opening hand is no longer guaranteed to be playable. |
 | Worthy Squirrel | -5 | Your opening squirrel has the Double Blood sigil. |
 | Annoying Trades | +5 | Annoying Starters also hits pelts; Trader offers are Annoying when any of your pelts is. |
@@ -36,16 +39,16 @@ Selected challenges show their icon with a yellow frame.
 - Tribe challenges combine with **OR**: Avian Only + Canine Only offers birds and canines.
 - Cost challenges combine with **OR**, and tribes and costs combine with **AND**: Insect Only + 2 Blood Only offers
   only insects that cost 2 blood.
-- Filters apply to card choices, rare choices, face-down cost/tribe choices, the Trader, the Trapper, Deck Trial
-  rewards and boulders. Your starter deck is untouched.
-- When too few cards match, the empty slots become a **Rabbit Pelt with the Annoying sigil**. Pelts have no tribe
-  and no cost, so at the Trapper they only stay real pelts when No Tribe / Free allow them; otherwise every pelt for
-  sale is an Annoying Rabbit Pelt at the Rabbit Pelt price.
+- Filters apply to card choices, rare choices, face-down cost/tribe choices, the Trader, Deck Trial rewards and
+  boulders. Your starter deck and the Trapper's pelts are untouched.
+- When too few cards match, the empty slots become a **Rabbit Pelt with the Annoying sigil**.
 
 ## Starter decks
 
 Rabbit Pelts, Rabbit and Wolf Pelts, Rabbit and Golden Pelts, Wolf and Rabbit Pelts, Pelt Assortment, Wolf and Golden
-Pelts, Golden and Wolf Pelts (1 Wolf, 2 Golden), Golden Pelts (3 Golden) (3 pelts each, with Act II style pixel portraits).
+Pelts, Golden and Wolf Pelts (1 Wolf, 2 Golden), Golden Pelts (3 Golden) (3 pelts each), and **Royal's Crew** (Mole
+Seaman, Skeleton Crew, Zombie Parrot). Every deck card gets an Act II style pixel portrait. Pelt deck icons stack their 3
+pelts (Rabbit plain, Wolf striped, Golden gridded); Royal's Crew shows a skull with an eye patch.
 
 ## Requirements
 

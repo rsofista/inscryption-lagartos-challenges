@@ -1,4 +1,4 @@
-"""Source of the 24 new challenges' texts in the 12 game languages.
+"""Source of the new challenges' texts in the 12 game languages.
 
 Run: python tools/new_texts.py  -> rewrites the generated region of LagartosChallenges/Translations.cs
 (between the "// <generated>" and "// </generated>" markers). Edit the texts here, not in the .cs file.
@@ -13,32 +13,32 @@ LANGS = ["fr", "it", "de", "es", "pt", "tr", "ru", "ja", "ko", "zhcn", "zhtw"]
 # (C# constant prefix, english title, english description, {lang: (title, description)})
 TEXTS = [
     ("NoFirstTurnKill", "No First Turn Kill",
-     "Nobody can win or lose a battle on their first turn: that damage stops one short.", {
-         "fr": ("Pas de victoire au premier tour", "Personne ne peut gagner ou perdre un combat à son premier tour : ces dégâts s'arrêtent à un point."),
-         "it": ("Niente vittoria al primo turno", "Nessuno può vincere o perdere una battaglia al primo turno: quel danno si ferma a un punto."),
-         "de": ("Kein Sieg im ersten Zug", "Niemand kann einen Kampf in seinem ersten Zug gewinnen oder verlieren: Der Schaden stoppt einen Punkt davor."),
-         "es": ("Sin victoria en el primer turno", "Nadie puede ganar ni perder un combate en su primer turno: ese daño se queda a uno."),
-         "pt": ("Sem vitória no primeiro turno", "Ninguém pode vencer ou perder uma batalha no primeiro turno: esse dano para a um ponto."),
-         "tr": ("İlk Turda Zafer Yok", "Kimse ilk turunda bir savaşı kazanamaz ya da kaybedemez: o hasar bir eksikte durur."),
-         "ru": ("Без победы в первый ход", "Никто не может выиграть или проиграть бой в свой первый ход: урон останавливается за одно очко."),
-         "ja": ("初手決着禁止", "最初のターンでは誰もバトルに勝つことも負けることもできない。そのダメージはあと1つで止まる。"),
-         "ko": ("첫 턴 결판 금지", "누구도 첫 턴에 전투를 이기거나 질 수 없다. 그 피해는 1 모자라게 멈춘다."),
-         "zhcn": ("禁止首回合决胜", "任何一方都无法在自己的第一回合赢下或输掉战斗：伤害会停在差一点的位置。"),
-         "zhtw": ("禁止首回合決勝", "任何一方都無法在自己的第一回合贏下或輸掉戰鬥：傷害會停在差一點的位置。"),
+     "No battle can be won or lost on anyone's first turn.", {
+         "fr": ("Pas de victoire au premier tour", "Aucun combat ne se gagne ni ne se perd au premier tour."),
+         "it": ("Niente vittoria al primo turno", "Nessuna battaglia si vince o si perde al primo turno."),
+         "de": ("Kein Sieg im ersten Zug", "Kein Kampf wird im ersten Zug gewonnen oder verloren."),
+         "es": ("Sin victoria en el primer turno", "Ningún combate se gana ni se pierde en el primer turno."),
+         "pt": ("Sem vitória no primeiro turno", "Nenhuma batalha é vencida ou perdida no primeiro turno."),
+         "tr": ("İlk Turda Zafer Yok", "Hiçbir savaş ilk turda kazanılamaz ya da kaybedilemez."),
+         "ru": ("Без победы в первый ход", "Бой нельзя выиграть или проиграть в первый ход."),
+         "ja": ("初手決着禁止", "最初のターンではバトルの勝敗はつかない。"),
+         "ko": ("첫 턴 결판 금지", "첫 턴에는 전투의 승패가 나지 않는다."),
+         "zhcn": ("禁止首回合决胜", "第一回合无法决出战斗胜负。"),
+         "zhtw": ("禁止首回合決勝", "第一回合無法決出戰鬥勝負。"),
      }),
     ("NoPhaseTurnKill", "No Phase Turn Kill",
-     "Nobody can win or lose a boss phase on their first turn after the scales reset.", {
-         "fr": ("Pas de victoire au premier tour de phase", "Personne ne peut gagner ou perdre une phase de boss à son premier tour après la remise à zéro de la balance."),
-         "it": ("Niente vittoria al primo turno di fase", "Nessuno può vincere o perdere una fase del boss al primo turno dopo l'azzeramento della bilancia."),
-         "de": ("Kein Sieg im ersten Phasenzug", "Niemand kann eine Bossphase im ersten Zug nach dem Zurücksetzen der Waage gewinnen oder verlieren."),
-         "es": ("Sin victoria en el primer turno de fase", "Nadie puede ganar ni perder una fase de jefe en su primer turno tras reiniciarse la balanza."),
-         "pt": ("Sem vitória no primeiro turno da fase", "Ninguém pode vencer ou perder uma fase de chefe no primeiro turno depois que a balança zera."),
-         "tr": ("Aşamanın İlk Turunda Zafer Yok", "Kimse terazi sıfırlandıktan sonraki ilk turunda bir patron aşamasını kazanamaz ya da kaybedemez."),
-         "ru": ("Без победы в первый ход фазы", "Никто не может выиграть или проиграть фазу босса в свой первый ход после сброса весов."),
-         "ja": ("フェーズ初手決着禁止", "天秤がリセットされた後の最初のターンでは、誰もボスのフェーズに勝つことも負けることもできない。"),
-         "ko": ("페이즈 첫 턴 결판 금지", "저울이 초기화된 뒤 첫 턴에는 누구도 보스 페이즈를 이기거나 질 수 없다."),
-         "zhcn": ("禁止阶段首回合决胜", "天平重置后的第一回合，任何一方都无法赢下或输掉首领阶段。"),
-         "zhtw": ("禁止階段首回合決勝", "天平重置後的第一回合，任何一方都無法贏下或輸掉首領階段。"),
+     "No boss phase can be won or lost on its first turn.", {
+         "fr": ("Pas de victoire au premier tour de phase", "Aucune phase de boss ne se gagne ni ne se perd à son premier tour."),
+         "it": ("Niente vittoria al primo turno di fase", "Nessuna fase del boss si vince o si perde al primo turno."),
+         "de": ("Kein Sieg im ersten Phasenzug", "Keine Bossphase wird im ersten Zug gewonnen oder verloren."),
+         "es": ("Sin victoria en el primer turno de fase", "Ninguna fase de jefe se gana ni se pierde en su primer turno."),
+         "pt": ("Sem vitória no primeiro turno da fase", "Nenhuma fase de chefe é vencida ou perdida no primeiro turno."),
+         "tr": ("Aşamanın İlk Turunda Zafer Yok", "Hiçbir patron aşaması ilk turunda kazanılamaz ya da kaybedilemez."),
+         "ru": ("Без победы в первый ход фазы", "Фазу босса нельзя выиграть или проиграть в первый ход."),
+         "ja": ("フェーズ初手決着禁止", "ボスのフェーズの最初のターンでは勝敗はつかない。"),
+         "ko": ("페이즈 첫 턴 결판 금지", "보스 페이즈 첫 턴에는 승패가 나지 않는다."),
+         "zhcn": ("禁止阶段首回合决胜", "首领阶段的第一回合无法决出胜负。"),
+         "zhtw": ("禁止階段首回合決勝", "首領階段的第一回合無法決出勝負。"),
      }),
     ("CanineOnly", "Canine Only", "Only Canine cards are offered to you.", {
         "fr": ("Canidés uniquement", "On ne vous propose que des cartes Canidé."),
@@ -170,7 +170,7 @@ TEXTS += [
     ("OneSquirrel", "One Squirrel", "After your opening hand, only one Squirrel is left to draw.", {
         "fr": ("Un seul écureuil", "Après votre main de départ, il ne reste qu'un écureuil à piocher."),
         "it": ("Un solo scoiattolo", "Dopo la mano iniziale resta un solo scoiattolo da pescare."),
-        "de": ("Ein Eichhörnchen", "Nach deiner Starthand bleibt nur ein Eichhörnchen zum Ziehen übrig."),
+        "de": ("Ein Eichhörnchen", "Nach der Starthand bleibt nur ein Eichhörnchen zum Ziehen."),
         "es": ("Una ardilla", "Tras tu mano inicial, solo queda una ardilla por robar."),
         "pt": ("Um Esquilo", "Depois da mão inicial, só resta um esquilo para comprar."),
         "tr": ("Tek Sincap", "Başlangıç elinden sonra çekilecek tek bir sincap kalır."),
@@ -193,6 +193,20 @@ TEXTS += [
         "zhcn": ("两只松鼠", "起手多一只松鼠。"),
         "zhtw": ("兩隻松鼠", "起手多一隻松鼠。"),
     }),
+    ("ForbiddenCards", "Forbidden Cards",
+     "The Great Kraken and boss cards join the offers.", {
+         "fr": ("Cartes interdites", "Le Grand Kraken et les cartes de boss rejoignent les offres."),
+         "it": ("Carte proibite", "Il Grande Kraken e le carte dei boss si uniscono alle offerte."),
+         "de": ("Verbotene Karten", "Der Große Krake und Bosskarten kommen in die Angebote."),
+         "es": ("Cartas prohibidas", "El Gran Kraken y las cartas de jefe se unen a las ofertas."),
+         "pt": ("Cartas Proibidas", "O Grande Kraken e as cartas de chefe entram nas ofertas."),
+         "tr": ("Yasak Kartlar", "Büyük Kraken ve patron kartları tekliflere katılır."),
+         "ru": ("Запретные карты", "Великий Кракен и карты боссов попадают в предложения."),
+         "ja": ("禁じられたカード", "グレート・クラーケンとボスのカードが提示される。"),
+         "ko": ("금지된 카드", "거대 크라켄과 보스 카드가 제시된다."),
+         "zhcn": ("禁忌卡牌", "巨型海妖和首领卡牌会加入可选卡牌。"),
+         "zhtw": ("禁忌卡牌", "巨型海妖和首領卡牌會加入可選卡牌。"),
+     }),
 ]
 
 

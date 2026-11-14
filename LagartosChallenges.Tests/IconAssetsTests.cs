@@ -70,7 +70,7 @@ public class IconAssetsTests
     /// <summary>Decodes the PNGs tools/make_icons.py writes (8-bit RGBA, one IDAT, filter 0 on every row).</summary>
     /// <param name="path">PNG file.</param>
     /// <returns>Pixels as [y, x] → {r, g, b, a}.</returns>
-    private static byte[,][] DecodeRgba(string path)
+    internal static byte[,][] DecodeRgba(string path)
     {
         byte[] png = File.ReadAllBytes(path);
         int width = (png[16] << 24) | (png[17] << 16) | (png[18] << 8) | png[19];

@@ -87,7 +87,9 @@ namespace LagartosChallenges
             int capped = KillCapRules.CombatDamage(life.Balance, dealt, playerIsAttacker: turns.IsPlayerTurn);
             if (capped == dealt) return;
             Plugin.Log.LogInfo($"Kill cap: combat damage {dealt} capped to {capped} (no overkill teeth).");
-            Traverse.Create(combat).Property(nameof(CombatPhaseManager.DamageDealtThisPhase)).SetValue(capped);
+            // The setter is private to CombatPhaseManager and Act 1 runs CombatPhaseManager3D, so set it through the
+            // declaring type (Traverse on the instance cannot see the setter and threw, killing the coroutine).
+            PatchTargets.SetProperty(combat, typeof(CombatPhaseManager), nameof(CombatPhaseManager.DamageDealtThisPhase), capped);
             KillCapPatches.ShowCapActivation();
         }
     }
